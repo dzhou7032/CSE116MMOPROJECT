@@ -1,6 +1,7 @@
 package DeadmanPlayground.Types
 
-class Player(var player: List[Status]) {
+class Player(var coordinate: List[Status], var health: Int) {
+  /*
   def move(Letter: String): List[Status] ={
     var Move: Status = new Status(List(0,0))
     if(Letter == "w"){
@@ -21,4 +22,6 @@ class Player(var player: List[Status]) {
       }
     player.patch(1, Seq(Move), 1)/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
   }
+  */
+
 }
