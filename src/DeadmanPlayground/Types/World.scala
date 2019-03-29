@@ -1,7 +1,7 @@
 package DeadmanPlayground.Types
 
 class World(var players: Map[Int, Player]) {
-  /*var enemies: Map[Int, Player]= this.players
+  /*var enemies: Map,[Int, Player]= this.players
     Map(
       0 -> new Player (List(new Status(List(0,0)), new Status(List(1, 0)), new Status(List(1,1)))),
       1 -> new Player (List(new Status(List(1,0)), new Status(List(1, 0)), new Status(List(1,1)))),
