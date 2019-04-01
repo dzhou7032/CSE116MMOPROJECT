@@ -9,8 +9,8 @@ class World(var players: Map[Int, Player]) {
     )
 */
   def hit(ID: Int): World ={
-    var hitPlayer: World = map(ID, new Player(new Status(players(ID).coordinate), players(ID).health - 1))
-    hitPlayer
+    val hitPlayer: Int = players(ID).health - 1
+    players(ID) = hitPlayer
   }
   var map: List[List[Int]] = List(
     List(0,0,2,0,0),

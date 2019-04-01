@@ -5,11 +5,11 @@ import DeadmanPlayground.Types.World
 import DeadmanPlayground.Types.Player
 
 class Game {
-  def lastMan(contestants: World):Boolean/*String*/ = {
+  def lastMan(contestants: World): Boolean /*String*/ = {
     //var winner: String = ""
-    if(contestants.players.size == 1){
+    if (contestants.players.size == 1) {
       //for((key, value) <- contestant){
-        //winner = "player " + key.toString() + " win!"
+      //winner = "player " + key.toString() + " win!"
       //}
       true
     }
@@ -17,6 +17,7 @@ class Game {
       false
     }
   }
+
   /*
   def moveValidation(contestant: World): Boolean/*Status*/={
     val everyone: Map[Int, Player] = contestant.players
@@ -39,27 +40,13 @@ class Game {
   }
   */
 
- def moveTest(Letter: String): List[Int] ={
-   var Move: List[Int] = List(0, 0)
-   if(Letter == "w"){
-     val Move1: List[Int] = List(0,-1)
-     Move = Move1
-   }
-   else if(Letter == "s"){
-     val Move2: List[Int] = List(0,1)
-     Move = Move2
-   }
-   else if(Letter == "a"){
-     val Move3: List[Int] = List(-1,0)
-     Move = Move3
-   }
-   else if(Letter == "d"){
-     val Move4: List[Int] = List(1,0)
-     Move = Move4
-   }
-   Move/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
- }
-  def shoot(map: Array[Array[Int]], direction: Array[Array[Int]]): Boolean ={
+}
+
+
+
+
+  /*
+  def hitScan(map: Array[Array[Int]], direction: Array[Array[Int]]): Boolean ={
     var hit: Boolean = false
     if(direction(1)(0) == 0){
       if(direction(1)(1) > 0){
@@ -118,4 +105,4 @@ class Game {
     hit
   }
 }
-
+*/
