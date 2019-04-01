@@ -1,6 +1,6 @@
 package DeadmanPlayground.Types
 
-class Player(var coordinate: List[Int], var direction: List[Int], var health: Int) {
+class Player(var coordinate: List[Int], var direction: List[Int], var health: Int, var score: Int) {
   def move(directions: String, world: World): List[Int] ={
     var map: List[List[Int]] = world.map
     var area: List[Int] = this.coordinate
@@ -10,10 +10,12 @@ class Player(var coordinate: List[Int], var direction: List[Int], var health: In
     val xCoordinate: Int = area(1) + facing(1)
     if(map(yCoordinate)(xCoordinate) == 0){//updates players new location
       area = List(yCoordinate, xCoordinate)
-      area
+      this.coordinate = area
+      coordinate
     }
     else{//revert the players location back to its original spot
-      area
+      this.coordinate = area
+      coordinate
     }
   }
 
@@ -44,20 +46,28 @@ class Player(var coordinate: List[Int], var direction: List[Int], var health: In
     ammo = maxAmmo
     ammo
   }
-  /*def shotFired(): Int = {
+
+  val maxHealth: Int = 100
+  this.health = maxHealth
+  def damaged(hitPlayer: Player): Unit ={
+    hitPlayer.health -= 10
+    hitPlayer.health
+  }
+
+  def fire(/*map: List[List[Int]], direction: Array[Int], coordinate: Array[Int], hitPlayer: Player*/): Int = {
     ammo -= 1
     ammo
-  }*/
-
-  def damaged(): Unit ={
-    health -= 1
-    health
   }
-  def fire(map: List[List[Int]], direction: Array[Int], coordinate: Array[Int]): Boolean = {
+
+  score = 0
+  def scoreIncrement(eliminated: Player): Int ={
+    score += 1
+    score
+  }
+  def bulletIncrement(map: List[List[Int]], direction: Array[Int], coordinate: Array[Int], player: Player): Boolean = {
     ammo -= 1
     var hit: Boolean = false
-    if (direction(0) == 0) {
-      //x going down
+    if (direction(0) == 0) {//x going down
       if (direction(1) > 0) {
         coordinate(1) + 1
         if (map(coordinate(0))(coordinate(1)) != 0) {
@@ -105,7 +115,7 @@ class Player(var coordinate: List[Int], var direction: List[Int], var health: In
       }
     }
     hit
-  }
+  }*/
   /*
   def move(Letter: String): List[Status] ={
     var Move: Status = new Status(List(0,0))
@@ -128,5 +138,4 @@ class Player(var coordinate: List[Int], var direction: List[Int], var health: In
     player.patch(1, Seq(Move), 1)/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
   }
   */
-
 }

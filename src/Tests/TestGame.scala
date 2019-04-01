@@ -5,6 +5,7 @@ import DeadmanPlayground.Types.{World,Player}
 import org.scalatest._
 
 class TestGame extends FunSuite {
+}
   /*test("testing for winner") {
     val victor: Game = new Game
     val units: World = new World(Map(
