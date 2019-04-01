@@ -1,11 +1,11 @@
 package DeadmanPlayground.Types
 
 class Player(var coordinate: List[Int], var direction: List[Int], var health: Int) {
-  def move(/*playerDirection: String => List[Int],*/ world: World): List[Int] ={
+  def move(directions: String, world: World): List[Int] ={
     var map: List[List[Int]] = world.map
     var area: List[Int] = this.coordinate
     //var direction: List[Int] = playerDirection()
-    var facing: List[Int] = this.direction
+    var facing: List[Int] = playerDirection(directions)
     val yCoordinate: Int = area(0) + facing(0)
     val xCoordinate: Int = area(1) + facing(1)
     if(map(yCoordinate)(xCoordinate) == 0){//updates players new location
@@ -49,7 +49,10 @@ class Player(var coordinate: List[Int], var direction: List[Int], var health: In
     ammo
   }*/
 
-
+  def damaged(): Unit ={
+    health -= 1
+    health
+  }
   def fire(map: List[List[Int]], direction: Array[Int], coordinate: Array[Int]): Boolean = {
     ammo -= 1
     var hit: Boolean = false

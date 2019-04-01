@@ -30,16 +30,6 @@ class TestGame extends FunSuite {
     player1.move("d")
     assert(new Status(player1(1)) == new Status(List(1,0)),"failed testing")
   }
-  */
-  test("testing testMove function"){
-    val action: World = new World
-    val map: World = map.map
-    assert(player("w") == List(0,-1),"failed testing")
-    assert(action.moveTest("s") == List(0, 1),"failed testing")
-    assert(action.moveTest("a") == List(-1, 0),"failed testing")
-    assert(action.moveTest("d") == List(1,0),"failed testing")
-    assert(action.moveTest("q") == List(0, 0), "failed testing")
-  }
   /*test("testing testMove function"){
     val action: Game = new Game
     assert(action.moveTest("w") == List(0,-1),"failed testing")

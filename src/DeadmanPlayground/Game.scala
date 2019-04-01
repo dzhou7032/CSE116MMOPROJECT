@@ -17,7 +17,6 @@ class Game {
       false
     }
   }
-
   /*
   def moveValidation(contestant: World): Boolean/*Status*/={
     val everyone: Map[Int, Player] = contestant.players
