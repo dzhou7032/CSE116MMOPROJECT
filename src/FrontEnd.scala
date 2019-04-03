@@ -97,7 +97,7 @@ object FrontEnd extends JFXApp {
       fill = Green
       for(tr <- 0 to 9) {
         for (tc <- 0 to 9) {
-          var gameImage: Image = new Image("floortile.png")
+          var gameImage: Image = new Image("floor.png")
           gc.drawImage(gameImage, tc * 32, tr * 32, 32, 32)
         }
       }

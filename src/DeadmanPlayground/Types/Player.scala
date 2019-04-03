@@ -115,7 +115,7 @@ class Player(var coordinate: List[Int], var direction: List[Int], var health: In
       }
     }
     hit
-  }*/
+  }
   /*
   def move(Letter: String): List[Status] ={
     var Move: Status = new Status(List(0,0))
