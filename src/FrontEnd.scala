@@ -21,7 +21,7 @@ object FrontEnd extends JFXApp {
   var hpForNow = 100.0
   var hpEnemy = 100.0
 
-  var thePlayer = new Player(List(0,0), List(-1,0), 100,0)
+  var thePlayer = new Player(List(0,0), List(-1,0), 100,0, true, true)
   var thisWorld = new World(Map(0->thePlayer))
 
   val gameCanvas = new Canvas(320,320)
