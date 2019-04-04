@@ -21,8 +21,9 @@ object FrontEnd extends JFXApp {
   var hpForNow = 100.0
   var hpEnemy = 100.0
 
-  var thePlayer = new Player(List(0,0), List(-1,0), 100,0)
-  var thisWorld = new World(Map(0->thePlayer))
+  var thePlayer = new Player(List(1,1), List(-1,0), 100,0)
+  var player2 = new Player(List(5,5), List(-1,0), 100, 0)
+  var thisWorld = new World(Map(0->thePlayer, 1->player2))
 
   val gameCanvas = new Canvas(320,320)
   val gc = gameCanvas.graphicsContext2D
@@ -44,10 +45,16 @@ object FrontEnd extends JFXApp {
   var chpRect = new Rectangle(){
     fill = Red
   }
+  var playeronehp = new Rectangle(){
+    fill = Red
+  }
+  var playertwohp = new Rectangle(){
+    fill = Red
+  }
 
   def keyPressed(keyCode: KeyCode): Unit = {
     keyCode.getName match {
-      case "Q" => firebullet(thePlayer)
+      case "Q" => firebullet(CharImageV)
       case "W" => thePlayer.move("w", thisWorld)//CharImageV.setLayoutY(CharImageV.getLayoutY() - 32)
         CharImageV.setRotate(0)
       case "A" => thePlayer.move("a", thisWorld)//CharImageV.setLayoutX(CharImageV.getLayoutX() - 32)
@@ -56,26 +63,36 @@ object FrontEnd extends JFXApp {
         CharImageV.setRotate(180)
       case "D" => thePlayer.move("d", thisWorld)//CharImageV.setLayoutX(CharImageV.getLayoutX() + 32)
         CharImageV.setRotate(90)
+
+      case "U" => firebullet(EnemyImageV)
+      case "I" => player2.move("w", thisWorld)//CharImageV.setLayoutY(CharImageV.getLayoutY() - 32)
+        EnemyImageV.setRotate(0)
+      case "J" => player2.move("a", thisWorld)//CharImageV.setLayoutX(CharImageV.getLayoutX() - 32)
+        EnemyImageV.setRotate(270)
+      case "K" => player2.move("s", thisWorld)//CharImageV.setLayoutY(CharImageV.getLayoutY() + 32)
+        EnemyImageV.setRotate(180)
+      case "L" => player2.move("d", thisWorld)//CharImageV.setLayoutX(CharImageV.getLayoutX() + 32)
+        EnemyImageV.setRotate(90)
+
       case _ => println(keyCode.getName + " pressed with no action")
     }
   }
-  def firebullet(playershoot: Player): Unit ={
-
-    var Bullets = new Image("bullet.png")
+  def firebullet(playershoot: ImageView): Unit ={
+    var Bullets = new Image("bullets.png")
     var BulletV = new ImageView(Bullets)
-    BulletV.setLayoutX(CharImageV.getLayoutX())
-    BulletV.setLayoutY(CharImageV.getLayoutY())
-    if(CharImageV.getRotate == 0){
+    BulletV.setLayoutX(playershoot.getLayoutX())
+    BulletV.setLayoutY(playershoot.getLayoutY())
+    if(playershoot.getRotate == 0){
       BulletsUp.children.add(BulletV)
       print("dasf")
     }
-    if(CharImageV.getRotate == 90){
+    if(playershoot.getRotate == 90){
       BulletsRight.children.add(BulletV)
     }
-    if(CharImageV.getRotate == 180){
+    if(playershoot.getRotate == 180){
       BulletsDown.children.add(BulletV)
     }
-    if(CharImageV.getRotate == 270){
+    if(playershoot.getRotate == 270){
       BulletsLeft.children.add(BulletV)
     }
   }
@@ -93,10 +110,15 @@ object FrontEnd extends JFXApp {
       chpRect.x = 5
       chpRect.y = 330
       chpRect.height = 30
+
+      playeronehp.height = 5
+      playertwohp.height = 5
+
       addEventHandler(KeyEvent.KEY_PRESSED, (event: KeyEvent) => keyPressed(event.getCode))
       fill = Green
       for(tr <- 0 to 9) {
         for (tc <- 0 to 9) {
+
           var gameImage: Image = new Image("floor.png")
           gc.drawImage(gameImage, tc * 32, tr * 32, 32, 32)
         }
@@ -117,7 +139,7 @@ object FrontEnd extends JFXApp {
         var gameImage: Image = new Image("walltile.png")
         gc.drawImage(gameImage, 288, rrw*32, 32, 32)
       }
-      content = List(gameCanvas, CharImageV, BulletsUp, BulletsRight, BulletsLeft, BulletsDown, EnemyImageV, hpRect, chpRect)
+      content = List(gameCanvas, CharImageV, BulletsUp, BulletsRight, BulletsLeft, BulletsDown, EnemyImageV, hpRect, chpRect, playeronehp, playertwohp)
     }
     val update: Long => Unit = (time: Long) => {
       for (shape <- (BulletsUp.children).reverse) {
@@ -140,6 +162,15 @@ object FrontEnd extends JFXApp {
       }
       CharImageV.setLayoutY(thePlayer.coordinate(0) *32)
       CharImageV.setLayoutX(thePlayer.coordinate(1) *32)
+      playeronehp.y = thePlayer.coordinate(0)*32
+      playeronehp.x = thePlayer.coordinate(1)*32
+      playeronehp.width = (hpForNow/100)*32
+
+      EnemyImageV.setLayoutY(player2.coordinate(0) *32)
+      EnemyImageV.setLayoutX(player2.coordinate(1) *32)
+      playertwohp.y = player2.coordinate(0)*32
+      playertwohp.x = player2.coordinate(1)*32
+      playertwohp.width = (hpEnemy/100)*32
 
       chpRect.width = (hpForNow/100)*230
     }
