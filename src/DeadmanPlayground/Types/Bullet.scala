@@ -2,7 +2,7 @@ package DeadmanPlayground.Types
 
 class Bullet(coordinates: List[Int], playerID : Player, walkable: Boolean) extends GameObjects(coordinates, walkable) {
 
-  def bulletIncrement(map: List[List[GameObjects]], direction: List[Int], coordinate: List[Int], player: Player, bullet: Bullet): Boolean = {
+  def bulletIncrement(map: Array[Array[GameObjects]], direction: List[Int], coordinate: List[Int], player: Player, bullet: Bullet, bulletOwner: Player): Boolean = {
     //assuming you give a bullet because was unable to check to see if the tile infront of it is a bullet or not
   var hit: Boolean = false
   if (direction(0) == 0) {//right
