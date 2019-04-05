@@ -1,6 +1,6 @@
 package DeadmanPlayground.Types
 
-class Player(val ID: Int, var coordinate: List[Int], var direction: List[Int], var health: Int, var score: Int, var alive: Boolean, walkable: Boolean, var bulletOwnership: List[Bullet]) extends GameObjects(coordinate, walkable) {
+class Player(val ID: Int, var coordinate: List[Int], var direction: List[Int], var health: Double, var score: Int, var alive: Boolean, walkable: Boolean, var bulletOwnership: List[Bullet]) extends GameObjects(coordinate, walkable) {
   def move(directions: String, world: World): List[Int] = {
     var map: Array[Array[GameObjects]] = world.map
     var area: List[Int] = this.coordinate
@@ -57,6 +57,15 @@ class Player(val ID: Int, var coordinate: List[Int], var direction: List[Int], v
   def damaged(hitPlayer: Player): Unit = {
     hitPlayer.health -= 10
   }
+  def shoot(): Boolean={
+    if(ammo>0){
+      ammo-=1
+      return true
+    }
+    else{
+      return false
+    }
+  }
 
   def fire(world: World): Unit = {
     ammo -= 1
@@ -77,11 +86,9 @@ class Player(val ID: Int, var coordinate: List[Int], var direction: List[Int], v
     score
   }
 
-  alive = true
-
   def playerHit(hitPlayer: Player): Unit = {
     hitPlayer.health -= 10
-    if (hitPlayer.health < 0) {
+    if (hitPlayer.health <= 0) {
       this.score += 1
       hitPlayer.alive = false
     }

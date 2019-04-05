@@ -14,6 +14,7 @@ class World(var players: Map[Int, Player]) {
     for(x <- 0 to 9) {
       map(tr)(x) = new Tile(List(tr,x), true)
     }
+
   }
   for(trw <- 0 to 9){
     map(0)(trw) = new Tile(List(0,trw), false)
@@ -29,6 +30,91 @@ class World(var players: Map[Int, Player]) {
   }
   for((k,v) <- players){
     map(v.coordinate(0))(v.coordinate(1)) = v
+  }
+
+  def bulletIncrement(map: Array[Array[GameObjects]], direction: List[Int], coordinate: List[Int], player: Player, bullet: Bullet, bulletOwner: Player): Boolean = {
+    //assuming you give a bullet because was unable to check to see if the tile infront of it is a bullet or not
+    var hit: Boolean = false
+    if (direction(0) == 0) {//right
+      if (direction(1) > 0) {
+        if (map(coordinate(0))(coordinate(1)+1) == bullet) {
+          coordinate(1) - 1
+          map.toBuffer.remove(coordinate(0))(coordinate(1))
+          map.toBuffer.remove(coordinate(0))(coordinate(1)+1)
+          hit = true
+        }
+        coordinate(1) + 1
+        if(map(coordinate(0))(coordinate(1)).isInstanceOf[Player]) {
+          hit = true
+        }
+        else if(map(coordinate(0))(coordinate(1)).walkable == false){
+          hit = true
+        }
+        else {
+          hit = false
+        }
+      }
+      else if (direction(1) < 0) {//left
+        if (map(coordinate(0))(coordinate(1)-1) == bullet) {
+          coordinate(1) + 1
+          map.toBuffer.remove(coordinate(0))(coordinate(1))
+          map.toBuffer.remove(coordinate(0))(coordinate(1)+1)
+          hit = true
+        }
+        coordinate(1) - 1
+        if(map(coordinate(0))(coordinate(1)) == player) {
+          player.playerHit(player)
+          hit = true
+        }
+        else if(map(coordinate(0))(coordinate(1)).walkable == false){
+          hit = true
+        }
+        else {
+          hit = false
+        }
+      }
+    }
+    else {
+      if (direction(0) > 0) {//down
+        if (map(coordinate(0)+1)(coordinate(1)) == bullet) {
+          coordinate(1) - 1
+          map.toBuffer.remove(coordinate(0))(coordinate(1))
+          map.toBuffer.remove(coordinate(0))(coordinate(1)+1)
+          hit = true
+        }
+        coordinate(0) + 1
+        if(map(coordinate(0))(coordinate(1)) == player) {
+          player.playerHit(player)
+          hit = true
+        }
+        else if(map(coordinate(0))(coordinate(1)).walkable == false){
+          hit = true
+        }
+        else {
+          hit = false
+        }
+      }
+      else if (direction(0) < 0) {//up
+        if (map(coordinate(0)-1)(coordinate(1)) == bullet) {
+          coordinate(1) + 1
+          map.toBuffer.remove(coordinate(0))(coordinate(1))
+          map.toBuffer.remove(coordinate(0))(coordinate(1)+1)
+          hit = true
+        }
+        coordinate(0) - 1
+        if(map(coordinate(0))(coordinate(1)) == player) {
+          player.playerHit(player)
+          hit = true
+        }
+        else if(map(coordinate(0))(coordinate(1)).walkable == false){
+          hit = true
+        }
+        else {
+          hit = false
+        }
+      }
+    }
+    hit
   }
  /*
   var map: List[List[Tile]] = List()
