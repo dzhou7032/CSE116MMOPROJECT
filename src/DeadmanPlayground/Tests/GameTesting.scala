@@ -41,9 +41,10 @@ class GameTesting extends FunSuite{
     val bulletPresentWorld: World = new World(Map(1 -> player1, 2 -> player2))
     var bulletOne: Bullet = new Bullet(List(1,2), player1, false)
     val bulletTwo: Bullet = new Bullet(List(1,3), player1, false)
-    assert(bulletOne.bulletIncrement(bulletPresentWorld.map, List(0,-1), List(1,2), null, null, player1) == true, "failed")//hits player
-    assert(bulletOne.bulletIncrement(bulletPresentWorld.map, List(-1,0), List(1,2), null, null, player1) == true, "failed")//hits wall
-    assert(bulletOne.bulletIncrement(bulletPresentWorld.map, List(0,1), List(1,2), null, null, player1) == true,"failed")//hits bullet
-    assert(bulletOne.bulletIncrement(bulletPresentWorld.map, List(1,0), List(1,2),null, null, player1) ==  false,"failed")//hits nothing
+    assert(bulletPresentWorld.map(1)(1).isInstanceOf[Player])
+    assert(bulletOne.bulletIncrement(bulletPresentWorld.map, List(0,-1), List(1,2), player2, null, player1) == true, "failed")//hits player
+    assert(bulletOne.bulletIncrement(bulletPresentWorld.map, List(-1,0), List(1,2), player2, null, player1) == true, "failed")//hits wall
+    assert(bulletOne.bulletIncrement(bulletPresentWorld.map, List(0,1), List(1,2), player2, null, player1) == false,"failed")//hits bullet
+    assert(bulletOne.bulletIncrement(bulletPresentWorld.map, List(1,0), List(1,2), player2, null, player1) ==  false,"failed")//hits nothing
   }
 }

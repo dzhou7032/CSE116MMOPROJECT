@@ -1,13 +1,13 @@
 package DeadmanPlayground.Types
 
-class Player(val ID: Int, var coordinate: List[Int], var direction: List[Int], var health: Double, var score: Int, var alive: Boolean, walkable: Boolean, var bulletOwnership: List[Bullet]) extends GameObjects(coordinate, walkable) {
+class Player(val ID: Int, var coordinate: List[Double], var direction: List[Int], var health: Double, var score: Int, var alive: Boolean, var bulletOwnership: List[Bullet]) extends GameObjects(coordinate) {
   def move(directions: String, world: World): List[Int] = {
-    var map: Array[Array[GameObjects]] = world.map
-    var area: List[Int] = this.coordinate
+    var map: Array[Array[Tile]] = world.map
+    var area: List[Double] = this.coordinate
     //var direction: List[Int] = playerDirection()
     var facing: List[Int] = playerDirection(directions)
-    val yCoordinate: Int = area(0) + facing(0)
-    val xCoordinate: Int = area(1) + facing(1)
+    val yCoordinate: Int = area(0).toInt + facing(0)
+    val xCoordinate: Int = area(1).toInt + facing(1)
     if (map(yCoordinate)(xCoordinate).walkable == true) {
       //updates players new location
       map(this.coordinate(0))(this.coordinate(1)) = new Tile(List(this.coordinate(0), this.coordinate(1)), true)
@@ -70,13 +70,8 @@ class Player(val ID: Int, var coordinate: List[Int], var direction: List[Int], v
   def fire(world: World): Unit = {
     ammo -= 1
     val initialDirection: List[Int] = this.direction
-    val spawnedCoordinate: List[Int] = List(this.coordinate(0) + this.direction(0), this.coordinate(1) + this.direction(1))
-    if (world.map(spawnedCoordinate(0))(spawnedCoordinate(1)).walkable == true) {
-      //set it equal to the objects walkable boolean
-      bulletOwnership :+ new Bullet(spawnedCoordinate, this, true)
-    }
-
-    //bulletIncrement(world.map, initialDirection, spawnedCoordinate, null)
+    val spawnedCoordinate: List[Double] = List(this.coordinate(0) + this.direction(0).toDouble, this.coordinate(1) + this.direction(1).toDouble)
+    bulletOwnership :+ new Bullet(spawnedCoordinate, this)
   }
 
   score = 0
