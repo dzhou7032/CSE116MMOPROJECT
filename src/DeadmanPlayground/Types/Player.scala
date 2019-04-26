@@ -2,18 +2,18 @@ package DeadmanPlayground.Types
 
 class Player(val ID: Int, var coordinate: List[Double], var direction: List[Int], var health: Double, var score: Int, var alive: Boolean, var bulletOwnership: List[Bullet]) extends GameObjects(coordinate) {
   def move(directions: String, world: World): List[Int] = {
-    var map: Array[Array[Tile]] = world.map
+    val usedMap: Array[Array[Tile]] = world.map
     var area: List[Double] = this.coordinate
     //var direction: List[Int] = playerDirection()
     var facing: List[Int] = playerDirection(directions)
     val yCoordinate: Int = area(0).toInt + facing(0)
     val xCoordinate: Int = area(1).toInt + facing(1)
-    if (map(yCoordinate)(xCoordinate).walkable == true) {
+    if (usedMap(yCoordinate)(xCoordinate).walkable == true) {
       //updates players new location
-      map(this.coordinate(0))(this.coordinate(1)) = new Tile(List(this.coordinate(0), this.coordinate(1)), true)
+      usedMap(this.coordinate(0))(this.coordinate(1)) = new Tile(List(this.coordinate(0), this.coordinate(1)), true)
       area = List(yCoordinate, xCoordinate)
       this.coordinate = area
-      map(this.coordinate(0))(this.coordinate(1)) = this
+      usedMap(this.coordinate(0))(this.coordinate(1)) = this
       coordinate
     }
     else {
@@ -38,6 +38,7 @@ class Player(val ID: Int, var coordinate: List[Double], var direction: List[Int]
     }
     else if (Letter == "d") {
       val direction4: List[Int] = List(0, 1)
+
       direction = direction4
     }
     direction /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
@@ -76,15 +77,18 @@ class Player(val ID: Int, var coordinate: List[Double], var direction: List[Int]
   }
 
   def fire(world: World): Unit = {
+    val usedMap: Array[Array[Tile]] = world.map
     ammo -= 1
     val initialDirection: List[Int] = this.direction
-    val spawnedCoordinate: List[Double] = List(this.coordinate(0) + this.direction(0).toDouble, this.coordinate(1) + this.direction(1).toDouble)
-    bulletOwnership :+ new Bullet(spawnedCoordinate, this)
+    val spawnedCoordinate: List[Double] = List(this.coordinate(0) + initialDirection(0).toDouble, this.coordinate(1) + initialDirection(1).toDouble)
+    var createdBullet: Bullet = new Bullet(spawnedCoordinate, this)
+    bulletOwnership :+ createdBullet
+    usedMap(spawnedCoordinate(0).toInt)(spawnedCoordinate(1).toInt).listOfBullet += createdBullet
   }
 
   score = 0
 
-  def scoreIncrement(eliminated: Player): Int = {
+  def scoreIncrement: Int = {
     score += 1
     score
   }

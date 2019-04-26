@@ -1,7 +1,7 @@
 package DeadmanPlayground.Types
 
 class Bullet(coordinates: List[Double], playerID : Player) extends GameObjects(coordinates) {
-  def bulletIncrement(map: Array[Array[Tile]], direction: List[Int], coordinate: List[Double], player: Player, bullet: Bullet, bulletOwner: Player): List[Any] = {
+  def bulletIncrement(map: Array[Array[Tile]], direction: List[Int], coordinate: List[Double]): List[Any] = {
     //assuming you give a bullet because was unable to check to see if the tile infront of it is a bullet or not
     val usedMap: Array[Array[Tile]] = map
     if (direction(0) == 0) {//right
@@ -20,6 +20,7 @@ class Bullet(coordinates: List[Double], playerID : Player) extends GameObjects(c
             usedMap(coordinate(0).toInt)(coordinate(1).toInt + 1).listOfPlayer(0).damaged(usedMap(coordinate(0).toInt)(coordinate(1).toInt - 1).listOfPlayer(0))//damages player
             if(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0).dead(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0))){//checks if player is dead or not
               usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer -= usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0)
+              this.playerID.scoreIncrement//adds a point to the player the player that own this bullet
             }
           }
           else if (usedMap(coordinate(0).toInt)(coordinate(1).toInt + 1).walkable == false) {
@@ -47,6 +48,7 @@ class Bullet(coordinates: List[Double], playerID : Player) extends GameObjects(c
             usedMap(coordinate(0).toInt)(coordinate(1).toInt - 1).listOfPlayer(0).damaged(usedMap(coordinate(0).toInt)(coordinate(1).toInt - 1).listOfPlayer(0))
             if(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0).dead(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0))){
               usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer -= usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0)
+              this.playerID.scoreIncrement
             }
           }
           else if (usedMap(coordinate(0).toInt)(coordinate(1).toInt - 1).walkable == false) {
@@ -76,6 +78,7 @@ class Bullet(coordinates: List[Double], playerID : Player) extends GameObjects(c
             usedMap(coordinate(0).toInt + 1)(coordinate(1).toInt).listOfPlayer(0).damaged(usedMap(coordinate(0).toInt)(coordinate(1).toInt - 1).listOfPlayer(0))
             if(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0).dead(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0))){
               usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer -= usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0)
+              this.playerID.scoreIncrement
             }
           }
           else if (usedMap(coordinate(0).toInt + 1)(coordinate(1).toInt).walkable == false) {
@@ -104,6 +107,7 @@ class Bullet(coordinates: List[Double], playerID : Player) extends GameObjects(c
             usedMap(coordinate(0).toInt - 1)(coordinate(1).toInt + 1).listOfPlayer(0).damaged(usedMap(coordinate(0).toInt)(coordinate(1).toInt - 1).listOfPlayer(0))
             if(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0).dead(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0))){
               usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer -= usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0)
+              this.playerID.scoreIncrement
             }
           }
           else if (usedMap(coordinate(0).toInt - 1)(coordinate(1).toInt).walkable == false) {
