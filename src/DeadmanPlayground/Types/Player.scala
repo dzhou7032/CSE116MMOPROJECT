@@ -57,6 +57,14 @@ class Player(val ID: Int, var coordinate: List[Double], var direction: List[Int]
   def damaged(hitPlayer: Player): Unit = {
     hitPlayer.health -= 10
   }
+  def dead(hitPlayer: Player): Boolean = {
+    var checkDead: Boolean = false
+    if(hitPlayer.health <= 0){
+      this.alive = false
+      checkDead =true
+    }
+    checkDead
+  }
   def shoot(): Boolean={
     if(ammo>0){
       ammo-=1
@@ -81,13 +89,14 @@ class Player(val ID: Int, var coordinate: List[Double], var direction: List[Int]
     score
   }
 
-  def playerHit(hitPlayer: Player): Unit = {
+  /*def playerHit(hitPlayer: Player): Unit = {
     hitPlayer.health -= 10
     if (hitPlayer.health <= 0) {
       this.score += 1
       hitPlayer.alive = false
     }
   }
+  */
   /*
   def hit(): Unit = {
     health -= 10
