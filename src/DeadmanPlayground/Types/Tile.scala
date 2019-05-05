@@ -1,5 +1,17 @@
 package DeadmanPlayground.Types
 
-class Tile(coordinate: List[Int], walkable: Boolean) extends GameObjects(coordinate, walkable) {
+import scala.collection.mutable.ListBuffer
 
+class Tile(coordinate: List[Double],var walkable: Boolean) {
+  var listOfPlayer: ListBuffer[Player] = new ListBuffer()
+  var listOfBullet: ListBuffer[Bullet] = new ListBuffer()
+  def additionOfObjects(objects: GameObjects): Unit ={
+    if(objects.isInstanceOf[Player] && walkable == true){
+      listOfPlayer :+ objects
+      walkable = false
+    }
+    else{
+      listOfBullet :+ objects
+    }
+  }
 }
