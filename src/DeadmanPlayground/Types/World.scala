@@ -103,7 +103,7 @@ class World(var players: Map[Int, Player]) {
         }
         coordinate(0) - 1
         if(map(coordinate(0))(coordinate(1)) == player) {
-          player.playerHit(player)
+          bulletOwner.playerHit(player)
           hit = true
         }
         else if(map(coordinate(0))(coordinate(1)).walkable == false){

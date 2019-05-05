@@ -265,11 +265,11 @@ object FrontEnd extends JFXApp {
           BulletsLeft.children.remove(shape)
         }
       }
-      for((k,v) <- thisWorld.players){
-        if(v.alive == false){
-          thisWorld.players = thisWorld.players.-(k)
-        }
-      }
+//      for((k,v) <- thisWorld.players){
+//        if(v.alive == false){
+//          thisWorld.players = thisWorld.players.-(k)
+//        }
+//      }
       playerOneImage.setLayoutY(player1.coordinate(0) *32)
       playerOneImage.setLayoutX(player1.coordinate(1) *32)
       playeronehp.y = player1.coordinate(0)*32
