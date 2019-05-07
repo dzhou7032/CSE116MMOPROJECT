@@ -16,15 +16,15 @@ import java.util.Properties
 import DeadmanPlayground.Types.{Bullet, Player, World}
 import javafx.scene.input.{KeyCode, KeyEvent}
 import scalafx.animation.AnimationTimer
-import scalafx.scene.control.TextField
+import scalafx.scene.contr  ol.TextField
 import scalafx.scene.text.Font
 
 object FrontEnd extends JFXApp {
   var hpForNow = 100.0
   var hpEnemy = 100.0
 
-  var player1 = new Player(1, List(1,1), List(-1,0), 100,0, true, false, bulletOwnership = List())
-  var player2 = new Player(2, List(2,2), List(-1,0), 100, 0, true, false, bulletOwnership = List())
+  var player1 = new Player(1, List(1,1), List(-1,0), 100,0, true, List())
+  var player2 = new Player(2, List(2,2), List(-1,0), 100, 0, true, List())
   var thisWorld = new World(Map(0->player1, 1->player2))
 
   val gameCanvas = new Canvas(320,320)
@@ -211,7 +211,7 @@ object FrontEnd extends JFXApp {
         for((k,v) <- thisWorld.players){
           if(shape.getLayoutY() > v.coordinate(0)*32 && shape.getLayoutY() < (v.coordinate(0)*32)+6 ){
             if(shape.getLayoutX() == v.coordinate(1)*32){
-              thisWorld.players(shape.getId().toInt).playerHit(v)
+//              thisWorld.players(shape.getId().toInt).playerHit(v)
               BulletsUp.children.remove(shape)
             }
           }
@@ -226,7 +226,7 @@ object FrontEnd extends JFXApp {
           if(v.ID != thisWorld.players(shape.getId().toInt).ID)
           if(shape.getLayoutX() > v.coordinate(1)*32 && shape.getLayoutX() < (v.coordinate(1)*32)+6 ){
             if(shape.getLayoutY() == v.coordinate(0)*32){
-              thisWorld.players(shape.getId().toInt).playerHit(v)
+ //             thisWorld.players(shape.getId().toInt).playerHit(v)
               BulletsRight.children.remove(shape)
             }
           }
@@ -241,7 +241,7 @@ object FrontEnd extends JFXApp {
           if(v.ID != thisWorld.players(shape.getId().toInt).ID)
           if(shape.getLayoutY() > v.coordinate(0)*32 && shape.getLayoutY() < (v.coordinate(0)*32)+6 ){
             if(shape.getLayoutX() == v.coordinate(1)*32){
-              thisWorld.players(shape.getId().toInt).playerHit(v)
+ //             thisWorld.players(shape.getId().toInt).playerHit(v)
 
               BulletsDown.children.remove(shape)
             }
@@ -256,7 +256,7 @@ object FrontEnd extends JFXApp {
         for((k,v) <- thisWorld.players){
           if(shape.getLayoutX() > v.coordinate(1)*32 && shape.getLayoutX() < (v.coordinate(1)*32)+6 ){
             if(shape.getLayoutY() == v.coordinate(0)*32){
-              thisWorld.players(shape.getId().toInt).playerHit(v)
+ //             thisWorld.players(shape.getId().toInt).playerHit(v)
               BulletsLeft.children.remove(shape)
             }
           }
