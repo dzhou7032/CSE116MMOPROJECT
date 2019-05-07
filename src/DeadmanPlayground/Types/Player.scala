@@ -1,26 +1,24 @@
 package DeadmanPlayground.Types
 
-class Player(val ID: Int, var coordinate: List[Double], var direction: List[Int], var health: Double, var score: Int, var alive: Boolean, var bulletOwnership: List[Bullet]) extends GameObjects(coordinate) {
+class Player(val ID: Int, var coordinate: List[Int], var direction: List[Int], var health: Double, var score: Int, var alive: Boolean, var bulletOwnership: List[Bullet]) extends GameObjects(coordinate) {
   def move(directions: String, world: World): List[Int] = {
     val usedMap: Array[Array[Tile]] = world.map
-    var area: List[Double] = this.coordinate
+    var area: List[Int] = this.coordinate
     //var direction: List[Int] = playerDirection()
     var facing: List[Int] = playerDirection(directions)
     val yCoordinate: Int = area(0).toInt + facing(0)
     val xCoordinate: Int = area(1).toInt + facing(1)
     if (usedMap(yCoordinate)(xCoordinate).walkable == true) {
       //updates players new location
-      usedMap(this.coordinate(0))(this.coordinate(1)) = new Tile(List(this.coordinate(0), this.coordinate(1)), true)
-      area = List(yCoordinate, xCoordinate)
+      usedMap(yCoordinate)(xCoordinate) = new Tile(List(yCoordinate, xCoordinate), false)
       this.coordinate = area
       usedMap(this.coordinate(0))(this.coordinate(1)) = this
-      coordinate
     }
     else {
       //revert the players location back to its original spot
       this.coordinate = area
-      coordinate
     }
+    coordinates
   }
   def playerDirection(Letter: String): List[Int] = {
     var direction: List[Int] = List(1, 0)
