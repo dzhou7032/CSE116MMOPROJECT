@@ -28,7 +28,7 @@ class Game {
   def gameState(): String = {
     val gameState: Map[String, JsValue] = Map(
       "gridSize" -> Json.toJson(Map("x" -> 320, "y" -> 320)),
-//      "walls" -> Json.toJson(this.walls.map({ w => Json.toJson(Map("x" -> w.coordinate(0), "y" -> w.coordinate(1))) })),
+      "walls" -> Json.toJson(this.walls.map({ w => Json.toJson(Map("x" -> w.coordinate(0), "y" -> w.coordinate(1))) })),
       "players" -> Json.toJson(this.players.map({ case (k, v) => Json.toJson(Map(
         "x" -> Json.toJson(v.coordinate(0)),
         "y" -> Json.toJson(v.coordinate(1)),

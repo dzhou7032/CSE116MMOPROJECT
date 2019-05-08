@@ -14,12 +14,6 @@ function parseGameState(event) {
 
     drawGameBoard(gameState['gridSize']);
 
-
-
-
-
-
-
     for (let player of gameState['players']) {
         placeCircle(player['x'], player['y'], player['id'] === socket.id ? '#ffff00' : '#56bcff', 2.0);
     }

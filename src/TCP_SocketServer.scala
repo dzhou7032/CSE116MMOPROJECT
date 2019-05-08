@@ -50,9 +50,15 @@ class TCP_SocketServer(game_actor: ActorRef) extends Actor {
 
 
   def handleMessageFromWebServer(messageString:String):Unit = {
-    println(messageString)
-  }
+    val message: JsValue = Json.parse(messageString)
+    val username = (message \ "username").as[String]
+    val messageType = (message \ "action").as[String]
 
+    messageType match {
+      case "connected" => game_actor ! AddPlayer(username)
+      case "disconnected" => game_actor ! RemovePlayer(username)
+    }
+  }
 
 
 }
