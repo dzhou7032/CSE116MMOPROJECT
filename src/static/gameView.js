@@ -8,20 +8,22 @@ var context = canvas.getContext("2d");
 context.globalCompositeOperation = 'source-over';
 
 function parseGameState(event) {
-    console.log(event)
     // console.log(event);
     const gameState = JSON.parse(event);
 
     drawGameBoard(gameState['gridSize']);
 
     for (let player of gameState['players']) {
-        placeCircle(player['x'], player['y'], player['id'] === socket.id ? '#ffff00' : '#56bcff', 2.0);
+        var img = new Image();
+        img.src = "charstand.png"
+        context.drawImage(img, player["x"]*32, player['y']*32)
+//        placeCircle(player['x'], player['y'], player['id'] === socket.id ? '#ffff00' : '#56bcff', 2.0);
     }
 
     for (let wall of gameState['walls']) {
         var img = new Image();
         img.src = "walltile.png"
-        context.drawImage(img, wall["x"], wall['y'])
+        context.drawImage(img, wall["x"]*32, wall['y']*32)
 //        placeSquare(wall['x'], wall['y'], 'grey');
     }
 

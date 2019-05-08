@@ -57,6 +57,10 @@ class TCP_SocketServer(game_actor: ActorRef) extends Actor {
     messageType match {
       case "connected" => game_actor ! AddPlayer(username)
       case "disconnected" => game_actor ! RemovePlayer(username)
+      case "move" =>
+        val x = (message \ "x").as[Double]
+        val y = (message \ "y").as[Double]
+        game_actor ! MovePlayer(username, x, y)
     }
   }
 

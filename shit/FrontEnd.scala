@@ -188,19 +188,19 @@ object FrontEnd extends JFXApp {
         }
       }
       for(trw <- 0 to 9){
-        var gameImage: Image = new Image("walltile.png")
+        var gameImage: Image = new Image("static/walltile.png")
         gc.drawImage(gameImage, trw*32, 0, 32, 32)
       }
       for(brw <- 0 to 9){
-        var gameImage: Image = new Image("walltile.png")
+        var gameImage: Image = new Image("static/walltile.png")
         gc.drawImage(gameImage, brw*32, 288, 32, 32)
       }
       for(lrw <- 0 to 9){
-        var gameImage: Image = new Image("walltile.png")
+        var gameImage: Image = new Image("static/walltile.png")
         gc.drawImage(gameImage, 0, lrw*32, 32, 32)
       }
       for(rrw <- 0 to 9){
-        var gameImage: Image = new Image("walltile.png")
+        var gameImage: Image = new Image("static/walltile.png")
         gc.drawImage(gameImage, 288, rrw*32, 32, 32)
       }
       content = List(gameCanvas, playerOneImage, BulletsUp, BulletsRight, BulletsLeft, BulletsDown, playerTwoImage, hpRect, chpRect, playeronehp, playertwohp, BulletList)

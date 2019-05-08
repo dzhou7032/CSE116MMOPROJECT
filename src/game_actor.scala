@@ -11,7 +11,7 @@ class game_actor extends Actor {
   override def receive: Receive = {
     case message: AddPlayer => game.addPlayer(message.username)
     case message:RemovePlayer => game.removePlayer(message.username)
-//    case message: MovePlayer => game.players(message.username). move(new PhysicsVector(message.x, message.y))
+    case message: MovePlayer => game.players(message.username). move(Array(message.x.toInt, message.y.toInt), game.world)
 
 
     case UpdateGame =>game.update()

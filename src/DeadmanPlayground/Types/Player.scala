@@ -13,7 +13,7 @@ class Player(val ID: String, var coordinate: Array[Double], var direction: Array
       usedMap(this.coordinate(0).toInt)(this.coordinate(1).toInt) = new Tile(Array(this.coordinate(0), this.coordinate(1)), true)
       area = Array(yCoordinate, xCoordinate)
       this.coordinate = area
-      usedMap(this.coordinate(0).toInt)(this.coordinate(1).toInt) = this
+      usedMap(this.coordinate(0).toInt)(this.coordinate(1).toInt).listOfPlayer += this
       coordinate
     }
     else {

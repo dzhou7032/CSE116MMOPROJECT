@@ -49,23 +49,23 @@ class Game {
     players -= id
   }
   def placeWall(x: Int, y: Int): Unit = {
-    walls = new Tile(List(x,y), false) :: walls
+    walls = new Tile(Array(x,y), false) :: walls
   }
 
-  def faceSouth(): List[Int] ={
-    return List(-1,0)
+  def faceSouth(): Array[Int] ={
+    return Array(-1,0)
   }
-  def faceNorth(): List[Int] = {
-    return List(1,0)
+  def faceNorth(): Array[Int] = {
+    return Array(1,0)
   }
-  def faceWest(): List[Int] = {
-    return List(0,-1)
+  def faceWest(): Array[Int] = {
+    return Array(0,-1)
   }
-  def faceEast(): List[Int] = {
-    return List(0,1)
+  def faceEast(): Array[Int] = {
+    return Array(0,1)
   }
-  def startingLocation(): List[Double] ={
-    var start: List[Double] = List(1,1)
+  def startingLocation(): Array[Double] ={
+    var start: Array[Double] = Array(1,1)
     return start
   }
   def lastMan(contestants: World): Boolean /*String*/ = {
