@@ -61,7 +61,10 @@ class TCP_SocketServer(game_actor: ActorRef) extends Actor {
         val x = (message \ "x").as[Double]
         val y = (message \ "y").as[Double]
         game_actor ! MovePlayer(username, x, y)
-    }
+      case "fire" =>
+        game_actor ! fire(username)
+      case "reload" =>
+        game_actor ! reload(username)
   }
 
 

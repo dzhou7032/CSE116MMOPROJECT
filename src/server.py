@@ -70,16 +70,22 @@ def disconnect():
 def key_state(jsonKeyStates):
     key_states = json.loads(jsonKeyStates)
     x = 0.0
-    if key_states["a"] and not key_states["d"]:
-        x = -1.0
-    elif not key_states["a"] and key_states["d"]:
-        x = 1.0
-    y = 0.0
-    if key_states["w"] and not key_states["s"]:
-        y = -1.0
-    elif not key_states["w"] and key_states["s"]:
-        y = 1.0
-    message = {"username": request.sid, "action": "move", "x": x, "y": y}
+    if not key_states["r"] and not key_states["f"]:
+        if key_states["a"] and not key_states["d"]:
+            x = -1.0
+        elif not key_states["a"] and key_states["d"]:
+            x = 1.0
+        y = 0.0
+        if key_states["w"] and not key_states["s"]:
+            y = -1.0
+        elif not key_states["w"] and key_states["s"]:
+            y = 1.0
+        message = {"username": request.sid, "action": "move", "x": x, "y": y}
+    else:
+        if key_states["f"]:
+            message = {"username": request.sid, "action": "fire"}
+        if key_states["r"]:
+            message = {"username": request.sid, "action": "reload"}
     send_to_scala(message)
 
 

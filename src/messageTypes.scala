@@ -12,4 +12,5 @@ case class GameState(gameState: String)
 case class AddPlayer(username: String)
 case class RemovePlayer(username: String)
 case class MovePlayer(username: String, x: Double, y:Double)
-
+case class fire(username: String)
+case class reload(username: String)
