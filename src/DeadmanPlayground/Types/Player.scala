@@ -1,6 +1,6 @@
 package DeadmanPlayground.Types
 
-class Player(val ID: Int, var coordinate: List[Double], var direction: List[Int], var health: Double, var score: Int, var alive: Boolean, var bulletOwnership: List[Bullet]) extends GameObjects(coordinate) {
+class Player(val ID: String, var coordinate: List[Double], var direction: List[Int], var health: Double, var score: Int, var alive: Boolean) extends GameObjects(coordinate) {
   def move(directions: String, world: World): List[Int] = {
     val usedMap: Array[Array[Tile]] = world.map
     var area: List[Double] = this.coordinate
@@ -82,7 +82,6 @@ class Player(val ID: Int, var coordinate: List[Double], var direction: List[Int]
     val initialDirection: List[Int] = this.direction
     val spawnedCoordinate: List[Double] = List(this.coordinate(0) + initialDirection(0).toDouble, this.coordinate(1) + initialDirection(1).toDouble)
     var createdBullet: Bullet = new Bullet(spawnedCoordinate, this)
-    bulletOwnership :+ createdBullet
     usedMap(spawnedCoordinate(0).toInt)(spawnedCoordinate(1).toInt).listOfBullet += createdBullet
   }
 

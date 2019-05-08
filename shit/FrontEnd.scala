@@ -16,7 +16,7 @@ import java.util.Properties
 import DeadmanPlayground.Types.{Bullet, Player, World}
 import javafx.scene.input.{KeyCode, KeyEvent}
 import scalafx.animation.AnimationTimer
-import scalafx.scene.contr  ol.TextField
+import scalafx.scene.control.TextField
 import scalafx.scene.text.Font
 
 object FrontEnd extends JFXApp {

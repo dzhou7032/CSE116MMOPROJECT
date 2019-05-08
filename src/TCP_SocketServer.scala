@@ -44,7 +44,9 @@ class TCP_SocketServer(game_actor: ActorRef) extends Actor {
   }
 
 
-  def handleMessageFromWebServer(messageString:String):Unit = {}
+  def handleMessageFromWebServer(messageString:String):Unit = {
+    println(messageString)
+  }
 
 
 

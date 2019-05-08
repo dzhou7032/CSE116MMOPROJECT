@@ -1,10 +1,64 @@
-package DeadmanPlayground
-
-import Array._
-import DeadmanPlayground.Types.World
-import DeadmanPlayground.Types.Player
+import DeadmanPlayground.Types.{Player, Tile, World}
+import play.api.libs.json.{JsValue, Json}
 
 class Game {
+
+  var players: Map[String, Player] = Map()
+
+  val world: World = new World(players)
+
+  var lastUpdateTime: Long = System.nanoTime()
+
+  var walls:List[Tile] =List()
+
+  def addPlayer(id: String): Unit = {
+    val player = new Player(id, startingLocation(), faceSouth(), 100, 0, true)
+    players +=(id -> player)
+    world.objects = player::world.objects
+  }
+    def update(): Unit = {
+//    val time: Long = System.nanoTime()
+//    val dt = (time - this.lastUpdateTime) / 1000000000.0
+//    Physics.updateWorld(this.world, dt)
+//    checkForPlayerHits()
+//    checkForBaseDamage()
+//    projectiles = projectiles.filter(po => !po.destroyed)
+//    this.lastUpdateTime = time
+    }
+  def gameState(): String = {
+    val gameState: Map[String, JsValue] = Map(
+      "gridSize" -> Json.toJson(Map("x" -> 320, "y" -> 320)),
+      "walls" -> Json.toJson(this.walls.map({ w => Json.toJson(Map("x" -> w.coordinate(0), "y" -> w.coordinate(1))) })),
+      "players" -> Json.toJson(this.players.map({ case (k, v) => Json.toJson(Map(
+        "x" -> Json.toJson(v.coordinate(0)),
+        "y" -> Json.toJson(v.coordinate(1)),
+        "v_d" -> Json.toJson(v.direction),
+        "ammo" -> Json.toJson(v.ammo),
+        "health" -> Json.toJson(v.health),
+        "id" -> Json.toJson(k))) })),
+//      "projectiles" -> Json.toJson(this.projectiles.map({ po => Json.toJson(Map("x" -> po.location.x, "y" -> po.location.y)) }))
+    )
+
+    Json.stringify(Json.toJson(gameState))
+  }
+
+  def removePlayer(id: String): Unit ={
+    players(id).destroy()
+    players -= id
+  }
+
+  def placeWall(x: Int, y: Int): Unit = {
+    walls = new Tile(List(x,y), false) :: walls
+  }
+
+  def faceSouth(): List[Int] ={
+    return List(-1,0)
+  }
+
+  def startingLocation(): List[Double] ={
+    var start: List[Double] = List(1,1)
+    return start
+  }
   def lastMan(contestants: World): Boolean /*String*/ = {
     //var winner: String = ""
     if (contestants.players.size == 1) {
