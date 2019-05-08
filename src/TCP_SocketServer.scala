@@ -38,8 +38,13 @@ class TCP_SocketServer(game_actor: ActorRef) extends Actor {
         handleMessageFromWebServer(curr)
       }
 
-    case send => this.game_actor ! harimoto("shut up once in a while")
+    case SendGameState =>
+      game_actor ! SendGameState
 
+    case gs: GameState =>
+      this.webServers.foreach((client: ActorRef) => client ! Write(ByteString(gs.gameState + delimiter)))
+
+//    case send => this.game_actor ! harimoto("shut up once in a while")
 
   }
 
@@ -57,22 +62,30 @@ class TCP_SocketServer(game_actor: ActorRef) extends Actor {
 
 
 
-object TCPSocketServer {
+object TCP_SocketServer {
 
   def main(args: Array[String]): Unit = {
 
-    val system = ActorSystem()
-
-    import system.dispatcher
+//    val system = ActorSystem()
+    val actorSystem = ActorSystem()
+//    import system.dispatcher
+    import actorSystem.dispatcher
     import scala.concurrent.duration._
 
 //    val tomokazu_harimoto = system.actorOf(Props(classOf[game_actor]))
-    val ma_long = system.actorOf(Props(classOf[game_actor]))
 
-    val server = system.actorOf(Props(classOf[TCP_SocketServer], ma_long))
+    val gameActor = actorSystem.actorOf(Props(classOf[game_actor]))
+    val server = actorSystem.actorOf(Props(classOf[TCP_SocketServer], gameActor))
+
+    actorSystem.scheduler.schedule(16.milliseconds, 32.milliseconds, gameActor, UpdateGame)
+    actorSystem.scheduler.schedule(32.milliseconds, 32.milliseconds, server, SendGameState)
+
+//    val ma_long = system.actorOf(Props(classOf[game_actor]))
+//
+//    val server = system.actorOf(Props(classOf[TCP_SocketServer], ma_long))
 
 //    actorSystem.scheduler.schedule(16.milliseconds, 32.milliseconds, game_actor, harimoto)
-    system.scheduler.schedule(16.milliseconds, 32.milliseconds, server, send)
+//    system.scheduler.schedule(16.milliseconds, 32.milliseconds, server, send)
   }
 
 }

@@ -28,18 +28,18 @@ class Game {
   def gameState(): String = {
     val gameState: Map[String, JsValue] = Map(
       "gridSize" -> Json.toJson(Map("x" -> 320, "y" -> 320)),
-      "walls" -> Json.toJson(this.walls.map({ w => Json.toJson(Map("x" -> w.coordinate(0), "y" -> w.coordinate(1))) })),
+//      "walls" -> Json.toJson(this.walls.map({ w => Json.toJson(Map("x" -> w.coordinate(0), "y" -> w.coordinate(1))) })),
       "players" -> Json.toJson(this.players.map({ case (k, v) => Json.toJson(Map(
         "x" -> Json.toJson(v.coordinate(0)),
         "y" -> Json.toJson(v.coordinate(1)),
         "v_d" -> Json.toJson(v.direction),
         "ammo" -> Json.toJson(v.ammo),
         "health" -> Json.toJson(v.health),
-        "id" -> Json.toJson(k))) })),
+        "id" -> Json.toJson(k))) }))
 //      "projectiles" -> Json.toJson(this.projectiles.map({ po => Json.toJson(Map("x" -> po.location.x, "y" -> po.location.y)) }))
     )
 
-    Json.stringify(Json.toJson(gameState))
+    return Json.stringify(Json.toJson(gameState))
   }
 
   def removePlayer(id: String): Unit ={

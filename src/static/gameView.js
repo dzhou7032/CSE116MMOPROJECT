@@ -8,23 +8,17 @@ var context = canvas.getContext("2d");
 context.globalCompositeOperation = 'source-over';
 
 function parseGameState(event) {
+    console.log(event)
     // console.log(event);
     const gameState = JSON.parse(event);
 
     drawGameBoard(gameState['gridSize']);
 
-    placeSquare(gameState['start']['x'], gameState['start']['y'], '#00ff00');
 
-    const health = gameState['baseHealth'];
-    const maxHealth = gameState['maxBaseHealth'];
-    const percentHealth = health / maxHealth;
-    const color = rgb(percentHealth * 255, percentHealth * 255, 0);
 
-    placeSquare(gameState['base']['x'], gameState['base']['y'], color);
 
-    for (let tower of gameState['towers']) {
-        drawTower(tower['x'], tower['y']);
-    }
+
+
 
     for (let player of gameState['players']) {
         placeCircle(player['x'], player['y'], player['id'] === socket.id ? '#ffff00' : '#56bcff', 2.0);
@@ -34,22 +28,7 @@ function parseGameState(event) {
         placeSquare(wall['x'], wall['y'], 'grey');
     }
 
-    for (let projectile of gameState['projectiles']) {
-        placeCircle(projectile['x'], projectile['y'], 'red', 1.0);
-    }
-
 }
-
-function cleanInt(input) {
-    const value = Math.round(input);
-    const asString = value.toString(16);
-    return value > 15 ? asString : "0" + asString;
-}
-
-function rgb(r, g, b) {
-    return "#" + cleanInt(r) + cleanInt(g) + cleanInt(b);
-}
-
 
 function drawGameBoard(gridSize) {
 
@@ -99,33 +78,3 @@ function placeCircle(x, y, color, size) {
     context.stroke();
 }
 
-function xComp(degrees){
-    return Math.cos(Math.PI*degrees/180.0)
-}
-
-function yComp(degrees){
-    return Math.sin(Math.PI*degrees/180.0)
-}
-
-function drawTower(x, y) {
-    const size = 3.0;
-
-    const scaledSize = size / 10.0 * tileSize;
-    const centerX = (x + 0.5) * tileSize;
-    const centerY = (y + 0.5) * tileSize;
-
-    context.fillStyle = '#760672';
-    context.strokeStyle = 'black';
-
-    context.beginPath();
-    context.moveTo(centerX + scaledSize , centerY);
-    for(let i = 0; i<=7; i++){
-        const degrees = i*60.0;
-        context.lineTo(centerX + xComp(degrees) * scaledSize, centerY + yComp(degrees) * scaledSize);
-    }
-
-    context.lineWidth = 5;
-    context.stroke();
-    context.lineWidth = 1;
-    context.fill()
-}

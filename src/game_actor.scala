@@ -18,8 +18,6 @@ class game_actor extends Actor {
 
     case SendGameState => sender() ! GameState(game.gameState())
 
-
-
     case message: harimoto => println(message.message)
 
     case malong => println("the dragon breathes fire")

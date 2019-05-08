@@ -19,6 +19,7 @@ scala_socket.connect(('localhost', 8000))
 
 delimiter = "~"
 
+
 def listen_to_scala(the_socket):
     delimiter = "~"
     buffer = ""
@@ -27,21 +28,31 @@ def listen_to_scala(the_socket):
         while delimiter in buffer:
             message = buffer[:buffer.find(delimiter)]
             buffer = buffer[buffer.find(delimiter) + 1:]
+            get_from_scala(message)
+
 
 def send_to_scala(data):
     scala_socket.sendall((json.dumps(data) + delimiter).encode())
 
 
+def get_from_scala(data):
+    print("HASLJDLAKSJD"+data)
+    socket_server.emit('gameState', data, broadcast=True)
+
+
 
 Thread(target=listen_to_scala, args=(scala_socket,)).start()
+
 
 @app.route('/')
 def index():
     return send_from_directory('static', 'index.html')
 
+
 @app.route('/<path:filename>')
 def static_files(filename):
     return send_from_directory('static', filename)
+
 
 @socket_server.on('connect')
 def got_message():
@@ -56,21 +67,22 @@ def disconnect():
     message = {"username": request.sid, "action": "disconnected"}
     send_to_scala(message)
 
-@socket_server.on('keyStates')
-def key_state(jsonKeyStates):
-    key_states = json.loads(jsonKeyStates)
-    x = 0.0
-    if key_states["a"] and not key_states["d"]:
-        x = -1.0
-    elif not key_states["a"] and key_states["d"]:
-        x = 1.0
-    y = 0.0
-    if key_states["w"] and not key_states["s"]:
-        y = -1.0
-    elif not key_states["w"] and key_states["s"]:
-        y = 1.0
-    message = {"username": request.sid, "action": "move", "x": x, "y": y}
-    send_to_scala(message)
+# @socket_server.on('keyStates')
+# def key_state(jsonKeyStates):
+#     key_states = json.loads(jsonKeyStates)
+#     x = 0.0
+#     if key_states["a"] and not key_states["d"]:
+#         x = -1.0
+#     elif not key_states["a"] and key_states["d"]:
+#         x = 1.0
+#     y = 0.0
+#     if key_states["w"] and not key_states["s"]:
+#         y = -1.0
+#     elif not key_states["w"] and key_states["s"]:
+#         y = 1.0
+#     message = {"username": request.sid, "action": "move", "x": x, "y": y}
+#     send_to_scala(message)
+
 
 print("Listening on port 8080")
 socket_server.run(app, port=8080)
