@@ -1,7 +1,7 @@
 package DeadmanPlayground.Types
 
-class Bullet(coordinates: List[Double], playerID : Player) extends GameObjects(coordinates) {
-  def bulletIncrement(map: Array[Array[Tile]], direction: List[Int], coordinate: List[Double]): List[Any] = {
+class Bullet(coordinates: Array[Double], playerID : Player) extends GameObjects(coordinates) {
+  def bulletIncrement(map: Array[Array[Tile]], direction: Array[Int], coordinate: List[Double]): List[Any] = {
     //assuming you give a bullet because was unable to check to see if the tile infront of it is a bullet or not
     val usedMap: Array[Array[Tile]] = map
     if (direction(0) == 0) {//right

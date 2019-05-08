@@ -1,17 +1,17 @@
 package DeadmanPlayground.Types
 
-class Player(val ID: String, var coordinate: List[Double], var direction: List[Int], var health: Double) extends GameObjects(coordinate) {
-  def move(directions: String, world: World): List[Double] = {
+class Player(val ID: String, var coordinate: Array[Double], var direction: Array[Int], var health: Double) extends GameObjects(coordinate) {
+  def move(directions: Array[Int], world: World): Array[Double] = {
     val usedMap: Array[Array[Tile]] = world.map
-    var area: List[Double] = this.coordinate
+    var area: Array[Double] = this.coordinate
     //var direction: List[Int] = playerDirection()
-    var facing: List[Int] = playerDirection(directions)
+    var facing: Array[Int] = directions
     val yCoordinate: Int = area(0).toInt + facing(0)
     val xCoordinate: Int = area(1).toInt + facing(1)
     if (usedMap(yCoordinate)(xCoordinate).walkable == true) {
       //updates players new location
       usedMap(this.coordinate(0))(this.coordinate(1)) = new Tile(List(this.coordinate(0), this.coordinate(1)), true)
-      area = List(yCoordinate, xCoordinate)
+      area = Array(yCoordinate, xCoordinate)
       this.coordinate = area
       usedMap(this.coordinate(0))(this.coordinate(1)) = this
       coordinate
@@ -80,8 +80,8 @@ class Player(val ID: String, var coordinate: List[Double], var direction: List[I
   def fire(world: World): Unit = {
     val usedMap: Array[Array[Tile]] = world.map
     ammo -= 1
-    val initialDirection: List[Int] = this.direction
-    val spawnedCoordinate: List[Double] = List(this.coordinate(0) + initialDirection(0).toDouble, this.coordinate(1) + initialDirection(1).toDouble)
+    val initialDirection: Array[Int] = this.direction
+    val spawnedCoordinate: Array[Double] = Array(this.coordinate(0) + initialDirection(0).toDouble, this.coordinate(1) + initialDirection(1).toDouble)
     var createdBullet: Bullet = new Bullet(spawnedCoordinate, this)
     usedMap(spawnedCoordinate(0).toInt)(spawnedCoordinate(1).toInt).listOfBullet += createdBullet
   }

@@ -2,7 +2,7 @@ package DeadmanPlayground.Types
 
 import scala.collection.mutable.ListBuffer
 
-class Tile(var coordinate: List[Double],var walkable: Boolean) {
+class Tile(var coordinate: Array[Double],var walkable: Boolean) {
 
   var listOfPlayer: ListBuffer[Player] = new ListBuffer()
   var listOfBullet: ListBuffer[Bullet] = new ListBuffer()
