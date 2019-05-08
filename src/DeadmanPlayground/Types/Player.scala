@@ -6,10 +6,15 @@ class Player(val ID: String, var coordinate: Array[Double], var direction: Array
     var area: Array[Double] = this.coordinate
     //var direction: List[Int] = playerDirection()
     var facing: Array[Int] = directions
-    val yCoordinate: Int = area(0).toInt + facing(0)
-    val xCoordinate: Int = area(1).toInt + facing(1)
+    var yCoordinate: Int = area(0).toInt + facing(0)
+    var xCoordinate: Int = area(1).toInt + facing(1)
     if (usedMap(yCoordinate)(xCoordinate).walkable == true) {
       //updates players new location
+      yCoordinate = area(0).toInt - facing(0)
+      xCoordinate = area(1).toInt - facing(1)
+      usedMap(this.coordinate(0).toInt)(this.coordinate(1).toInt).listOfPlayer -= this
+      yCoordinate = area(0).toInt + facing(0)
+      xCoordinate = area(1).toInt + facing(1)
       usedMap(this.coordinate(0))(this.coordinate(1)) = new Tile(Array(this.coordinate(0), this.coordinate(1)), true)
       area = Array(yCoordinate, xCoordinate)
       this.coordinate = area
