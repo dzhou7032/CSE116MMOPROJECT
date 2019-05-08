@@ -19,7 +19,10 @@ function parseGameState(event) {
     }
 
     for (let wall of gameState['walls']) {
-        placeSquare(wall['x'], wall['y'], 'grey');
+        var img = new Image();
+        img.src = "walltile.png"
+        context.drawImage(img, wall["x"], wall['y'])
+//        placeSquare(wall['x'], wall['y'], 'grey');
     }
 
 }
