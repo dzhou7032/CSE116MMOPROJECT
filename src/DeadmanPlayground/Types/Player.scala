@@ -1,7 +1,7 @@
 package DeadmanPlayground.Types
 
-class Player(val ID: String, var coordinate: List[Double], var direction: List[Int], var health: Double, var score: Int, var alive: Boolean) extends GameObjects(coordinate) {
-//  def move(directions: String, world: World): List[Int] = {
+class Player(val ID: String, var coordinate: List[Double], var direction: List[Int], var health: Double) extends GameObjects(coordinate) {
+//  def move(directions: String, world: World): List[Double] = {
 //    val usedMap: Array[Array[Tile]] = world.map
 //    var area: List[Double] = this.coordinate
 //    //var direction: List[Int] = playerDirection()
@@ -22,6 +22,7 @@ class Player(val ID: String, var coordinate: List[Double], var direction: List[I
 //      coordinate
 //    }
 //  }
+//
 //  def playerDirection(Letter: String): List[Int] = {
 //    var direction: List[Int] = List(1, 0)
 //    if (Letter == "w") {
@@ -61,8 +62,8 @@ class Player(val ID: String, var coordinate: List[Double], var direction: List[I
 //  def dead(hitPlayer: Player): Boolean = {
 //    var checkDead: Boolean = false
 //    if(hitPlayer.health <= 0){
-//      this.alive = false
-//      checkDead =true
+//      hitPlayer.destroy()
+//      checkDead = true
 //    }
 //    checkDead
 //  }
@@ -84,13 +85,8 @@ class Player(val ID: String, var coordinate: List[Double], var direction: List[I
 //    var createdBullet: Bullet = new Bullet(spawnedCoordinate, this)
 //    usedMap(spawnedCoordinate(0).toInt)(spawnedCoordinate(1).toInt).listOfBullet += createdBullet
 //  }
-//
-//  score = 0
-//
-//  def scoreIncrement: Int = {
-//    score += 1
-//    score
-//  }
+
+
 
   /*def playerHit(hitPlayer: Player): Unit = {
     hitPlayer.health -= 10

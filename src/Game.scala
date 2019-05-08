@@ -11,8 +11,10 @@ class Game {
 
   var walls:List[Tile] =List()
 
+  world.wallsx.foreach(wall => placeWall(wall.coordinate(0).toInt, wall.coordinate(1).toInt))
+
   def addPlayer(id: String): Unit = {
-    val player = new Player(id, startingLocation(), faceSouth(), 100, 0, true)
+    val player = new Player(id, startingLocation(), faceSouth(), 100)
     players +=(id -> player)
     world.objects = player::world.objects
   }
@@ -46,7 +48,6 @@ class Game {
     players(id).destroy()
     players -= id
   }
-
   def placeWall(x: Int, y: Int): Unit = {
     walls = new Tile(List(x,y), false) :: walls
   }
@@ -54,7 +55,15 @@ class Game {
   def faceSouth(): List[Int] ={
     return List(-1,0)
   }
-
+  def faceNorth(): List[Int] = {
+    return List(1,0)
+  }
+  def faceWest(): List[Int] = {
+    return List(0,-1)
+  }
+  def faceEast(): List[Int] = {
+    return List(0,1)
+  }
   def startingLocation(): List[Double] ={
     var start: List[Double] = List(1,1)
     return start
