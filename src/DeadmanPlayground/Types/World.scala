@@ -1,6 +1,6 @@
 package DeadmanPlayground.Types
 
-class World(var players: Map[Int, Player]) {
+class World(var players: Map[String, Player]) {
   /*var enemies: Map,[Int, Player]= this.players
     Map(
       0 -> new Player (List(new Status(List(0,0)), new Status(List(1, 0)), new Status(List(1,1)))),
@@ -8,6 +8,8 @@ class World(var players: Map[Int, Player]) {
       new Tile -> new Player (List(new Status(List(4,new Tile)), new Status(List(1, 0)), new Status(List(1,1))))
     )
 */
+
+  var objects: List[GameObjects] = List()
 
   var map: Array[Array[Tile]] = Array.ofDim[Tile](10,10)
   for(tr <- 0 to 9){

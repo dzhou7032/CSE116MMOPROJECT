@@ -18,13 +18,14 @@ class Bullet(coordinates: List[Double], playerID : Player) extends GameObjects(c
           if (usedMap(coordinate(0).toInt)(coordinate(1).toInt + 1).listOfPlayer.length >= 1) {
             usedMap(coordinate(0).toInt)(coordinate(1).toInt - 1).listOfBullet -= this//removes bullet
             usedMap(coordinate(0).toInt)(coordinate(1).toInt + 1).listOfPlayer(0).damaged(usedMap(coordinate(0).toInt)(coordinate(1).toInt - 1).listOfPlayer(0))//damages player
+            this.destroy()
             if(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0).dead(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0))){//checks if player is dead or not
               usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer -= usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0)
-              this.playerID.scoreIncrement//adds a point to the player the player that own this bullet
             }
           }
           else if (usedMap(coordinate(0).toInt)(coordinate(1).toInt + 1).walkable == false) {
             usedMap(coordinate(0).toInt)(coordinate(1).toInt - 1).listOfBullet -= this//bullet collided with a wall
+            this.destroy()
           }
           else {
             usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfBullet -= this//assumes that "this" is the bullet removed
@@ -46,13 +47,14 @@ class Bullet(coordinates: List[Double], playerID : Player) extends GameObjects(c
           if (usedMap(coordinate(0).toInt)(coordinate(1).toInt - 1).listOfPlayer.length >= 1) {
             usedMap(coordinate(0).toInt)(coordinate(1).toInt + 1).listOfBullet -= this
             usedMap(coordinate(0).toInt)(coordinate(1).toInt - 1).listOfPlayer(0).damaged(usedMap(coordinate(0).toInt)(coordinate(1).toInt - 1).listOfPlayer(0))
+            this.destroy()
             if(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0).dead(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0))){
               usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer -= usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0)
-              this.playerID.scoreIncrement
             }
           }
           else if (usedMap(coordinate(0).toInt)(coordinate(1).toInt - 1).walkable == false) {
             usedMap(coordinate(0).toInt)(coordinate(1).toInt + 1).listOfBullet -= this
+            this.destroy()
           }
           else {
             usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfBullet -= this
@@ -76,13 +78,14 @@ class Bullet(coordinates: List[Double], playerID : Player) extends GameObjects(c
           if (usedMap(coordinate(0).toInt + 1)(coordinate(1).toInt).listOfPlayer.length >= 1) {
             usedMap(coordinate(0).toInt - 1)(coordinate(1).toInt).listOfBullet -= this
             usedMap(coordinate(0).toInt + 1)(coordinate(1).toInt).listOfPlayer(0).damaged(usedMap(coordinate(0).toInt)(coordinate(1).toInt - 1).listOfPlayer(0))
+            this.destroy()
             if(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0).dead(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0))){
               usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer -= usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0)
-              this.playerID.scoreIncrement
             }
           }
           else if (usedMap(coordinate(0).toInt + 1)(coordinate(1).toInt).walkable == false) {
             usedMap(coordinate(0).toInt - 1)(coordinate(1).toInt).listOfBullet -= this
+            this.destroy()
           }
           else {
             usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfBullet -= this
@@ -105,13 +108,14 @@ class Bullet(coordinates: List[Double], playerID : Player) extends GameObjects(c
           if (usedMap(coordinate(0).toInt - 1)(coordinate(1).toInt).listOfPlayer.length >= 1) {
             usedMap(coordinate(0).toInt + 1)(coordinate(1).toInt - 1).listOfBullet -= this
             usedMap(coordinate(0).toInt - 1)(coordinate(1).toInt + 1).listOfPlayer(0).damaged(usedMap(coordinate(0).toInt)(coordinate(1).toInt - 1).listOfPlayer(0))
+            this.destroy()
             if(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0).dead(usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0))){
               usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer -= usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfPlayer(0)
-              this.playerID.scoreIncrement
             }
           }
           else if (usedMap(coordinate(0).toInt - 1)(coordinate(1).toInt).walkable == false) {
             usedMap(coordinate(0).toInt + 1)(coordinate(1).toInt).listOfBullet -= this
+            this.destroy()
           }
           else {
             usedMap(coordinate(0).toInt)(coordinate(1).toInt).listOfBullet -= this
