@@ -10,9 +10,10 @@ class game_actor extends Actor {
 
   override def receive: Receive = {
     case message: AddPlayer => game.addPlayer(message.username)
-    case message:RemovePlayer => game.removePlayer(message.username)
+    case message: RemovePlayer => game.removePlayer(message.username)
     case message: MovePlayer => game.players(message.username). move(Array(message.x.toInt, message.y.toInt), game.world)
-
+    case message: fire => game.players(message.username).fire(game.world)
+    case message: reload => game.players(message.username).reload()
 
     case UpdateGame =>game.update()
 

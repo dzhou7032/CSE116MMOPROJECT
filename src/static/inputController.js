@@ -21,6 +21,10 @@ function handleEvent(event, toSet){
         setState("s", toSet);
     }else if(event.key === "d" || event.key === "ArrowRight"){
         setState("d", toSet);
+    }else if(event.key === "f"){
+        setState("f", toSet);
+    }else if(event.key === "r"){
+        setState("r", toSet);
     }
 }
 
