@@ -44,12 +44,12 @@ class TCP_SocketServer(game_actor: ActorRef) extends Actor {
     case gs: GameState =>
       this.webServers.foreach((client: ActorRef) => client ! Write(ByteString(gs.gameState + delimiter)))
 
-//    case send => this.game_actor ! harimoto("shut up once in a while")
+    //    case send => this.game_actor ! harimoto("shut up once in a while")
 
   }
 
 
-  def handleMessageFromWebServer(messageString:String):Unit = {
+  def handleMessageFromWebServer(messageString: String): Unit = {
     val message: JsValue = Json.parse(messageString)
     val username = (message \ "username").as[String]
     val messageType = (message \ "action").as[String]
@@ -65,9 +65,10 @@ class TCP_SocketServer(game_actor: ActorRef) extends Actor {
         game_actor ! fire(username)
       case "reload" =>
         game_actor ! reload(username)
+    }
+
+
   }
-
-
 }
 
 
