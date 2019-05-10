@@ -40,6 +40,7 @@ object RealFrontEnd extends JFXApp {
   println("hello")
   class HandleMessagesFromPython() extends Emitter.Listener {
     theplayersPos = Map()
+
     override def call(objects: Object*): Unit = {
       playergc.clearRect(0, 0, 500, 500)
       val message = objects.apply(0).toString
@@ -56,14 +57,14 @@ object RealFrontEnd extends JFXApp {
       }
       for (j <- players) {
         var surprise = new ImageView(new Image("static/charstand.png"))
-        if(j("it").as[Boolean] == true) {
-           surprise = new ImageView(new Image("static/charstandit.png"))
+        if (j("it").as[Boolean] == true) {
+          surprise = new ImageView(new Image("static/charstandit.png"))
         }
         if (checking(j)) {
           Platform.runLater {
-            if(j("it").as[Boolean] == true){
+            if (j("it").as[Boolean] == true) {
               theplayersPos(j("id").toString()).setImage(new Image("static/charstandit.png"))
-            }else{
+            } else {
               theplayersPos(j("id").toString()).setImage(new Image("static/charstand.png"))
             }
             theplayersPos(j("id").toString()).setLayoutX(j("x").as[Double] * 32)
@@ -80,22 +81,20 @@ object RealFrontEnd extends JFXApp {
         }
       }
       Platform.runLater {
-      if (theplayersPos.size > 0) {
-        for ((k, v) <- theplayersPos) {
-          if (playerList.children.contains(v)) {
+        if (theplayersPos.size > 0) {
+          for ((k, v) <- theplayersPos) {
+            if (playerList.children.contains(v)) {
 
-          } else {
-            playerList.children.add(v)
+            } else {
+              playerList.children.add(v)
 
+            }
           }
         }
-      }
-    }
-      Platform.runLater{
-        for((k,v) <- theplayersPos) {
-          if (checkers(players, k)){
+        for ((k, v) <- theplayersPos) {
+          if (checkers(players, k)) {
 
-          }else{
+          } else {
             playerList.children.remove(v)
           }
         }
