@@ -16,6 +16,10 @@ function parseGameState(event) {
     for (let player of gameState['players']) {
         var img = new Image();
         img.src = "charstand.png"
+        if(player["it"] == true){
+            img.src = "charstandit.png"
+            console.log("yess")
+        }
         context.drawImage(img, player["x"]*32, player['y']*32)
 //        placeCircle(player['x'], player['y'], player['id'] === socket.id ? '#ffff00' : '#56bcff', 2.0);
     }

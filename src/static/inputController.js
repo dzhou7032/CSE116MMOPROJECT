@@ -5,6 +5,9 @@ var keyStates = {
     "d": false
 };
 
+var fire = false
+
+
 function setState(key, toSet){
     if(keyStates[key] !== toSet){
         keyStates[key] = toSet;
@@ -22,7 +25,8 @@ function handleEvent(event, toSet){
     }else if(event.key === "d" || event.key === "ArrowRight"){
         setState("d", toSet);
     }else if(event.key === "f"){
-        setState("f", toSet);
+        fire = toSet
+        socket.emit("tagKey", JSON.stringify(fire));
     }else if(event.key === "r"){
         setState("r", toSet);
     }

@@ -82,5 +82,20 @@ def key_state(jsonKeyStates):
     message = {"username": request.sid, "action": "move", "x": x, "y": y}
     send_to_scala(message)
 
+@socket_server.on('fireKey')
+def key_state(jsonKeyStates):
+    fkey = json.loads(jsonKeyStates)
+    if(fkey == True):
+        message = {"username": request.sid, "action": "fire"}
+        send_to_scala(message)
+
+@socket_server.on('tagKey')
+def key_state(jsonKeyStates):
+    fkey = json.loads(jsonKeyStates)
+    if(fkey == True):
+        print("pressed!")
+        message = {"username": request.sid, "action": "tag"}
+        send_to_scala(message)
+
 print("Listening on port 8080")
 socket_server.run(app, port=8080)

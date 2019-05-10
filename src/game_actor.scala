@@ -14,6 +14,7 @@ class game_actor extends Actor {
     case message: MovePlayer => game.players(message.username). move(Array(message.x.toInt, message.y.toInt), game.world)
     case message: fire => game.players(message.username).fire(game.world)
     case message: reload => game.players(message.username).reload()
+    case message: tag => game.players(message.username).tag(game.players)
 
     case UpdateGame =>game.update()
 

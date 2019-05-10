@@ -65,6 +65,9 @@ class TCP_SocketServer(game_actor: ActorRef) extends Actor {
         game_actor ! fire(username)
       case "reload" =>
         game_actor ! reload(username)
+      case "tag"=>
+        println("weranit")
+        game_actor ! tag(username)
     }
 
 

@@ -1,5 +1,6 @@
 import DeadmanPlayground.Types.{Player, Tile, World}
 import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json._
 
 class Game {
 
@@ -13,21 +14,39 @@ class Game {
 
   world.wallsx.foreach(wall => placeWall(wall.coordinate(0).toInt, wall.coordinate(1).toInt))
 
+  var bullets: List[Map[String, Double]] = List()
+
   def addPlayer(id: String): Unit = {
     val player = new Player(id, startingLocation(), faceSouth(), 100)
     players +=(id -> player)
     world.objects = player::world.objects
   }
     def update(): Unit = {
-//    val time: Long = System.nanoTime()
-//    val dt = (time - this.lastUpdateTime) / 1000000000.0
-//    Physics.updateWorld(this.world, dt)
-//    checkForPlayerHits()
-//    checkForBaseDamage()
-//    projectiles = projectiles.filter(po => !po.destroyed)
-//    this.lastUpdateTime = time
+      if(players.size == 1){
+        for((k,v) <- players){
+          v.it = true
+        }
+      }
     }
   def gameState(): String = {
+//    for(df <- world.map){
+//      for(fd <- df){
+//        for(xj <- fd.listOfBullet){
+//          bullets = Map("x" -> xj.coordinates(0), "y" -> xj.coordinates(1)) :: bullets
+//        }
+//      }
+//    }
+
+
+    for(j <- bullets){
+      var ts = Json.toJson(j.map({ case (k, v) => Json.toJson(Map(
+        "x" -> Json.toJson(j("x")),
+        "y" -> Json.toJson(j("y"))
+      ))}))
+    }
+
+
+
     val gameState: Map[String, JsValue] = Map(
       "gridSize" -> Json.toJson(Map("x" -> 320, "y" -> 320)),
       "walls" -> Json.toJson(this.walls.map({ w => Json.toJson(Map("x" -> w.coordinate(0), "y" -> w.coordinate(1))) })),
@@ -37,8 +56,9 @@ class Game {
         "v_d" -> Json.toJson(v.direction),
         "ammo" -> Json.toJson(v.ammo),
         "health" -> Json.toJson(v.health),
+        "it" -> Json.toJson(v.it),
         "id" -> Json.toJson(k))) }))
-//      "projectiles" -> Json.toJson(this.projectiles.map({ po => Json.toJson(Map("x" -> po.location.x, "y" -> po.location.y)) }))
+//      "bullets" -> Json.toJson(bullets)
     )
 
     return Json.stringify(Json.toJson(gameState))
