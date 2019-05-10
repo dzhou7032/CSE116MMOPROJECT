@@ -1,299 +1,114 @@
-//import DeadmanPlayground.Types.{Player, World}
-//import io.socket.client.{IO, Socket}
-//import io.socket.emitter.Emitter
-//import javafx.scene.input.{KeyCode, KeyEvent}
-//import scalafx.animation.AnimationTimer
-//import scalafx.application.JFXApp
-//import scalafx.scene.canvas.Canvas
-//import scalafx.scene.image.{Image, ImageView}
-//import scalafx.scene.paint.Color.{Gray, Green, Red}
-//import scalafx.scene.shape.Rectangle
-//import scalafx.scene.{Group, Scene}
-//
-//object FrontEnd extends JFXApp {
-//
-//  var socket: Socket = IO.socket("http://localhost:8080/")
-//  socket.on("gameState", new HandleMessagesFromPython)
-//  socket.connect()
-//
-////  socket.emit("register", "myUsername")
-//
-//  class HandleMessagesFromPython() extends Emitter.Listener {
-//    override def call(objects: Object*): Unit = {
-//      val message = objects.apply(0).toString
-//      // do something with message
-//    }
-//  }
-//
-//
-//
-//  var hpForNow = 100.0
-//  var hpEnemy = 100.0
-//
-//  var player1 = new Player("1", Array(1,1), Array(-1,0), 100)
-//  var player2 = new Player("2", Array(2,2), Array(-1,0), 100)
-//
-//
-//  val gameCanvas = new Canvas(320,320)
-//  val gc = gameCanvas.graphicsContext2D
-//
-//  var CharImage = new Image("charstand.png")
-//  var playerOneImage = new ImageView(CharImage)
-//  var EnemyImage = new Image("charstand.png")
-//  var playerTwoImage = new ImageView(EnemyImage)
-//
-//  var BulletsUp: Group = new Group {}
-//  var BulletsRight: Group = new Group {}
-//  var BulletsLeft: Group = new Group {}
-//  var BulletsDown: Group = new Group {}
-//  var BulletList: Group = new Group{}
-//
-//  var hpRect = new Rectangle(){
-//    fill = Gray
-//  }
-//  var chpRect = new Rectangle(){
-//    fill = Red
-//  }
-//  var playeronehp = new Rectangle(){
-//    fill = Red
-//  }
-//  var playertwohp = new Rectangle(){
-//    fill = Red
-//  }
-//
-//  def keyPressed(keyCode: KeyCode): Unit = {
-//    keyCode.getName match {
-//      case "Q" => firebullet(playerOneImage, player1)
-//      case "W" => player1.move("w", thisWorld)//CharImageV.setLayoutY(CharImageV.getLayoutY() - 32)
-//        playerOneImage.setRotate(0)
-//      case "A" => player1.move("a", thisWorld)//CharImageV.setLayoutX(CharImageV.getLayoutX() - 32)
-//        playerOneImage.setRotate(270)
-//      case "S" => player1.move("s", thisWorld)//CharImageV.setLayoutY(CharImageV.getLayoutY() + 32)
-//        playerOneImage.setRotate(180)
-//      case "D" => player1.move("d", thisWorld)//CharImageV.setLayoutX(CharImageV.getLayoutX() + 32)
-//        playerOneImage.setRotate(90)
-//      case "E" => reloadf(player1)
-//
-//      case "U" => firebullet(playerTwoImage, player2)
-//      case "I" => player2.move("w", thisWorld)//CharImageV.setLayoutY(CharImageV.getLayoutY() - 32)
-//        playerTwoImage.setRotate(0)
-//      case "J" => player2.move("a", thisWorld)//CharImageV.setLayoutX(CharImageV.getLayoutX() - 32)
-//        playerTwoImage.setRotate(270)
-//      case "K" => player2.move("s", thisWorld)//CharImageV.setLayoutY(CharImageV.getLayoutY() + 32)
-//        playerTwoImage.setRotate(180)
-//      case "L" => player2.move("d", thisWorld)//CharImageV.setLayoutX(CharImageV.getLayoutX() + 32)
-//        playerTwoImage.setRotate(90)
-//      case "O" => reloadf(player2)
-//      case _ => println(keyCode.getName + " pressed with no action")
-//    }
-//  }
-//  def reloadf(player:Player): Unit={
-//    player.reload()
-//    var bulletty  = new Image("bullets.png")
-//    for(xd <- 1 to player1.ammo){
-//      var buleet = new ImageView(bulletty)
-//      buleet.setLayoutX((32*xd)-32)
-//      buleet.setLayoutY(380)
-//      BulletList.children.add(buleet)
-//    }
-//  }
-//  def firebullet(playershoot: ImageView, player: Player): Unit ={
-//    if(player.shoot() == false){
-//      return
-//    }
-//    BulletList.children.remove(0,BulletList.children.size())
-//    var bulletty  = new Image("bullets.png")
-//    for(xd <- 1 to player1.ammo){
-//      var buleet = new ImageView(bulletty)
-//      buleet.setLayoutX((32*xd)-32)
-//      buleet.setLayoutY(380)
-//      BulletList.children.add(buleet)
-//    }
-//    var Bullets = new Image("bullets.png")
-//    var BulletV = new ImageView(Bullets)
-//    BulletV.setLayoutX(playershoot.getLayoutX())
-//    BulletV.setLayoutY(playershoot.getLayoutY())
-//    if(playershoot == playerOneImage){
-//      if(playershoot.getRotate == 0){
-//        BulletV.id="0"
-//        //player1.bulletOwnership = player1.bulletOwnership :+ new Bullet(this.player1.coordinate, this.player1, this.player1.walkable)
-//        BulletsUp.children.add(BulletV)
-//        print("dasf")
-//      }
-//      if(playershoot.getRotate == 90){
-//        BulletV.id="0"
-//        //player1.bulletOwnership = player1.bulletOwnership :+ new Bullet(this.player1.coordinate, this.player1, this.player1.walkable)
-//        BulletsRight.children.add(BulletV)
-//      }
-//      if(playershoot.getRotate == 180){
-//        BulletV.id="0"
-//        //player1.bulletOwnership = player1.bulletOwnership :+ new Bullet(this.player1.coordinate, this.player1, this.player1.walkable)
-//        BulletsDown.children.add(BulletV)
-//      }
-//      if(playershoot.getRotate == 270){
-//        BulletV.id="0"
-//        //player1.bulletOwnership = player1.bulletOwnership :+ new Bullet(this.player1.coordinate, this.player1, this.player1.walkable)
-//        BulletsLeft.children.add(BulletV)
-//      }
-//    }
-//    else{
-//      if(playershoot.getRotate == 0){
-//        BulletV.id="1"
-//        //player2.bulletOwnership = player2.bulletOwnership :+ new Bullet(this.player2.coordinate, this.player2, this.player2.walkable)
-//        BulletsUp.children.add(BulletV)
-//        print("dasf")
-//      }
-//      if(playershoot.getRotate == 90){
-//        BulletV.id="1"
-//        //player2.bulletOwnership = player2.bulletOwnership :+ new Bullet(this.player2.coordinate, this.player2, this.player2.walkable)
-//        BulletsRight.children.add(BulletV)
-//      }
-//      if(playershoot.getRotate == 180){
-//        BulletV.id="1"
-//        //player2.bulletOwnership = player2.bulletOwnership :+ new Bullet(this.player2.coordinate, this.player2, this.player2.walkable)
-//        BulletsDown.children.add(BulletV)
-//      }
-//      if(playershoot.getRotate == 270){
-//        BulletV.id="1"
-//        //player2.bulletOwnership = player2.bulletOwnership :+ new Bullet(this.player2.coordinate, this.player2, this.player2.walkable)
-//        BulletsLeft.children.add(BulletV)
-//      }
-//    }
-//  }
-//
-//  stage = new JFXApp.PrimaryStage {
-//    title.value = "Hartloff Fucking Hitler's Ass"
-//    width = 600
-//    height = 450
-//    scene = new Scene {
-//      hpRect.x = 0
-//      hpRect.y = 325
-//      hpRect.width = 240
-//      hpRect.height = 40
-//
-//      chpRect.x = 5
-//      chpRect.y = 330
-//      chpRect.height = 30
-//
-//      playeronehp.height = 5
-//      playertwohp.height = 5
-//
-//      var bulletty  = new Image("bullets.png")
-//      for(xd <- 1 to player1.ammo){
-//        var buleet = new ImageView(bulletty)
-//        buleet.setLayoutX((32*xd)-32)
-//        buleet.setLayoutY(380)
-//        BulletList.children.add(buleet)
-//      }
-//
-//      addEventHandler(KeyEvent.KEY_PRESSED, (event: KeyEvent) => keyPressed(event.getCode))
-//      fill = Green
-//      for(tr <- 0 to 9) {
-//        for (tc <- 0 to 9) {
-//          var gameImage: Image = new Image("floor.png")
-//          gc.drawImage(gameImage, tc * 32, tr * 32, 32, 32)
-//        }
-//      }
-//      for(trw <- 0 to 9){
-//        var gameImage: Image = new Image("static/walltile.png")
-//        gc.drawImage(gameImage, trw*32, 0, 32, 32)
-//      }
-//      for(brw <- 0 to 9){
-//        var gameImage: Image = new Image("static/walltile.png")
-//        gc.drawImage(gameImage, brw*32, 288, 32, 32)
-//      }
-//      for(lrw <- 0 to 9){
-//        var gameImage: Image = new Image("static/walltile.png")
-//        gc.drawImage(gameImage, 0, lrw*32, 32, 32)
-//      }
-//      for(rrw <- 0 to 9){
-//        var gameImage: Image = new Image("static/walltile.png")
-//        gc.drawImage(gameImage, 288, rrw*32, 32, 32)
-//      }
-//      content = List(gameCanvas, playerOneImage, BulletsUp, BulletsRight, BulletsLeft, BulletsDown, playerTwoImage, hpRect, chpRect, playeronehp, playertwohp, BulletList)
-//    }
-//    val update: Long => Unit = (time: Long) => {
-//      for (shape <- (BulletsUp.children).reverse) {
-//        shape.setLayoutY(shape.getLayoutY() - 5)
-//        for((k,v) <- thisWorld.players){
-//          if(shape.getLayoutY() > v.coordinate(0)*32 && shape.getLayoutY() < (v.coordinate(0)*32)+6 ){
-//            if(shape.getLayoutX() == v.coordinate(1)*32){
-////              thisWorld.players(shape.getId().toInt).playerHit(v)
-//              BulletsUp.children.remove(shape)
-//            }
-//          }
-//        }
-//        if(shape.getLayoutY() < 32){
-//          BulletsUp.children.remove(shape)
-//        }
-//      }
-//      for (shape <- (BulletsRight.children).reverse) {
-//        shape.setLayoutX(shape.getLayoutX() + 5)
-//        for((k,v) <- thisWorld.players){
-//          if(v.ID != thisWorld.players(shape.getId().toInt).ID)
-//          if(shape.getLayoutX() > v.coordinate(1)*32 && shape.getLayoutX() < (v.coordinate(1)*32)+6 ){
-//            if(shape.getLayoutY() == v.coordinate(0)*32){
-// //             thisWorld.players(shape.getId().toInt).playerHit(v)
-//              BulletsRight.children.remove(shape)
-//            }
-//          }
-//        }
-//        if(shape.getLayoutX() > 256){
-//          BulletsRight.children.remove(shape)
-//        }
-//      }
-//      for (shape <- (BulletsDown.children).reverse) {
-//        shape.setLayoutY(shape.getLayoutY() + 5)
-//        for((k,v) <- thisWorld.players){
-//          if(v.ID != thisWorld.players(shape.getId().toInt).ID)
-//          if(shape.getLayoutY() > v.coordinate(0)*32 && shape.getLayoutY() < (v.coordinate(0)*32)+6 ){
-//            if(shape.getLayoutX() == v.coordinate(1)*32){
-// //             thisWorld.players(shape.getId().toInt).playerHit(v)
-//
-//              BulletsDown.children.remove(shape)
-//            }
-//          }
-//        }
-//        if(shape.getLayoutY() > 256){
-//          BulletsDown.children.remove(shape)
-//        }
-//      }
-//      for (shape <- (BulletsLeft.children).reverse) {
-//        shape.setLayoutX(shape.getLayoutX() - 5)
-//        for((k,v) <- thisWorld.players){
-//          if(shape.getLayoutX() > v.coordinate(1)*32 && shape.getLayoutX() < (v.coordinate(1)*32)+6 ){
-//            if(shape.getLayoutY() == v.coordinate(0)*32){
-// //             thisWorld.players(shape.getId().toInt).playerHit(v)
-//              BulletsLeft.children.remove(shape)
-//            }
-//          }
-//        }
-//        if(shape.getLayoutX() < 32){
-//          BulletsLeft.children.remove(shape)
-//        }
-//      }
-////      for((k,v) <- thisWorld.players){
-////        if(v.alive == false){
-////          thisWorld.players = thisWorld.players.-(k)
-////        }
-////      }
-//      playerOneImage.setLayoutY(player1.coordinate(0) *32)
-//      playerOneImage.setLayoutX(player1.coordinate(1) *32)
-//      playeronehp.y = player1.coordinate(0)*32
-//      playeronehp.x = player1.coordinate(1)*32
-//      playeronehp.width = (player1.health/100).toDouble*32
-//
-//      playerTwoImage.setLayoutY(player2.coordinate(0) *32)
-//      playerTwoImage.setLayoutX(player2.coordinate(1) *32)
-//      playertwohp.y = player2.coordinate(0)*32
-//      playertwohp.x = player2.coordinate(1)*32
-//      playertwohp.width = (player2.health/100)*32
-//
-//      chpRect.width = (player1.health/100)*230
-//    }
-//    // Start Animations. Calls update 60 times per second (takes update as an argument)
-//    AnimationTimer(update).start()
-//  }
-//
-//
-//}
+import DeadmanPlayground.Types.{Player, World}
+import io.socket.client.{IO, Socket}
+import io.socket.emitter.Emitter
+import javafx.scene.input.{KeyCode, KeyEvent}
+import play.api.libs.json.{JsValue, Json}
+import scalafx.animation.AnimationTimer
+import scalafx.application
+import scalafx.application.{JFXApp, Platform}
+import scalafx.scene.canvas.Canvas
+import scalafx.scene.image.{Image, ImageView}
+import scalafx.scene.paint.Color.{Gray, Green, Red}
+import scalafx.scene.shape.Rectangle
+import scalafx.scene.{Group, Scene}
+
+object FrontEnd extends JFXApp {
+
+  var socket: Socket = IO.socket("http://localhost:8080/")
+  socket.on("gameState", new HandleMessagesFromPython)
+  socket.connect()
+
+  //  socket.emit("register", "myUsername")
+
+  val gameCanvas = new Canvas(320,320)
+  val playerCanvas = new Canvas(320, 320)
+  val gc = gameCanvas.graphicsContext2D
+  val playergc = playerCanvas.graphicsContext2D
+
+  var theplayersPos: Map[String, ImageView] = Map()
+  var playerList: Group = new Group{}
+
+  stage = new JFXApp.PrimaryStage{
+    title.value = "DEADMAN PLAYGROUND"
+    width = 500
+    height = 500
+    scene = new Scene{
+      content = List(gameCanvas, playerList, playerCanvas)
+      addEventHandler(KeyEvent.KEY_PRESSED, (event: KeyEvent) => keyPressed(event.getCode))
+    }
+  }
+  println("hello")
+  class HandleMessagesFromPython() extends Emitter.Listener {
+    theplayersPos = Map()
+    override def call(objects: Object*): Unit = {
+      playergc.clearRect(0, 0, 500, 500)
+      val message = objects.apply(0).toString
+      val messagex: JsValue = Json.parse(message)
+      var gridSize: Map[String, Int] = (messagex \ "gridSize").as[Map[String, Int]]
+      var walls: List[Map[String, Int]] = (messagex \ "walls").as[List[Map[String,  Int]]]
+      var players: List[Map[String, JsValue]] = (messagex \ "players").as[List[Map[String, JsValue]]]
+
+      stage.width = gridSize("x")+100
+      stage.height = gridSize("y")+100
+      for(w <- walls){
+        var gameImage: Image = new Image("static/walltile.png")
+        gc.drawImage(gameImage, w("x")*32, w("y")*32)
+      }
+      for(j <- players){
+        if(checking(j)){
+          Platform.runLater{
+            theplayersPos(j("id").toString()).setLayoutX(j("x").as[Double]*32)
+            theplayersPos(j("id").toString()).setLayoutY(j("y").as[Double]*32)
+          }
+        }else{
+          Platform.runLater{
+            var surprise = new ImageView(new Image("static/charstand.png"))
+            surprise.setLayoutX(j("x").as[Double]*32)
+            surprise.setLayoutY(j("y").as[Double]*32)
+            theplayersPos += (j("id").toString() -> surprise)
+          }
+          //          var gameImage: Image = new Image("static/charstand.png")
+          //          playergc.drawImage(gameImage, j("x").as[Int]*32, j("y").as[Int]*32)
+        }
+      }
+      if(theplayersPos.size > 0) {
+        for ((k, v) <- theplayersPos) {
+          if (playerList.children.contains(v)) {
+
+          } else {
+            Platform.runLater{
+              playerList.children.add(v)
+            }
+          }
+        }
+      }
+    }
+  }
+  def checking(themap: Map[String,JsValue]): Boolean ={
+    for((k,v) <- theplayersPos){
+      if(themap("id").toString() == k){
+        return true
+      }
+    }
+    return false
+  }
+
+  def keyPressed(keyCode: KeyCode): Unit = {
+    keyCode.getName match {
+      case "W" =>
+        var keyss: Map[String, Boolean] = Map("w" -> true, "s" -> false, "a" -> false, "d" ->  false)
+        socket.emit("keyStates", Json.stringify(Json.toJson(keyss)))
+      case "A" => var keyss: Map[String, Boolean] = Map("w" -> false, "s" -> false, "a" -> true, "d" ->  false)
+        socket.emit("keyStates", Json.stringify(Json.toJson(keyss)))
+      case "S" => var keyss: Map[String, Boolean] = Map("w" -> false, "s" -> true, "a" -> false, "d" ->  false)
+        socket.emit("keyStates", Json.stringify(Json.toJson(keyss)))
+      case "D" => var keyss: Map[String, Boolean] = Map("w" -> false, "s" -> false, "a" -> false, "d" ->  true)
+        socket.emit("keyStates", Json.stringify(Json.toJson(keyss)))
+    }
+  }
+  val update: Long => Unit = (time: Long) => {
+
+  }
+
+
+}

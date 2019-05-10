@@ -56,13 +56,17 @@ object RealFrontEnd extends JFXApp {
       }
       for(j <- players){
         if(checking(j)){
-          theplayersPos(j("id").toString()).setLayoutX(j("x").as[Double]*32)
-          theplayersPos(j("id").toString()).setLayoutY(j("y").as[Double]*32)
+          Platform.runLater{
+            theplayersPos(j("id").toString()).setLayoutX(j("x").as[Double]*32)
+            theplayersPos(j("id").toString()).setLayoutY(j("y").as[Double]*32)
+          }
         }else{
-          var surprise = new ImageView(new Image("static/charstand.png"))
-          surprise.setLayoutX(j("x").as[Double]*32)
-          surprise.setLayoutY(j("y").as[Double]*32)
-          theplayersPos += (j("id").toString() -> surprise)
+          Platform.runLater{
+            var surprise = new ImageView(new Image("static/charstand.png"))
+            surprise.setLayoutX(j("x").as[Double]*32)
+            surprise.setLayoutY(j("y").as[Double]*32)
+            theplayersPos += (j("id").toString() -> surprise)
+          }
 //          var gameImage: Image = new Image("static/charstand.png")
 //          playergc.drawImage(gameImage, j("x").as[Int]*32, j("y").as[Int]*32)
         }
@@ -78,8 +82,6 @@ object RealFrontEnd extends JFXApp {
           }
         }
       }
-      println(playerList.getChildren.get(0).getLayoutX)
-      println(playerList.getChildren.get(0).getLayoutY)
     }
   }
   def checking(themap: Map[String,JsValue]): Boolean ={
